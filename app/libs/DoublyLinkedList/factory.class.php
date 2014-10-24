@@ -1,3 +1,28 @@
 <?php
 
+namespace libs\DoublyLinkedList;
 
+class factory extends _factory {
+
+	use \libs\factory;
+
+	public static function Build($options = false) {
+		$o = new linkedList();
+
+		if (is_array($options)) {
+			$list = &$options;
+			if (\utils\Tools::isAssoc($list)) {
+				foreach ($list as $key=> $val) {
+					$o->push($key, $val);
+				}
+			} else {
+				foreach ($list as $val) {
+					$o->push($val);
+				}
+			}
+		}
+
+		return $o;
+	}
+
+}
