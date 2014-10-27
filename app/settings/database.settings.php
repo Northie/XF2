@@ -2,13 +2,13 @@
 
 namespace settings;
 
-class general {
+class database {
     use \utils\traits\singleton;
-    use general;
+    use database;
     use settings;
-     
+    
     private function __construct() {
         $this->readSettings();
     }
-     
+ 
 }
