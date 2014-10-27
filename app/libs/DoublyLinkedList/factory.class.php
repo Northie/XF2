@@ -10,7 +10,7 @@ class factory extends _factory {
 		$o = new linkedList();
 
 		if (is_array($options)) {
-			$list = &$options;
+			$list = $options['list'] ? $options['list'] : $options;
 			if (\utils\Tools::isAssoc($list)) {
 				foreach ($list as $key=> $val) {
 					$o->push($key, $val);
