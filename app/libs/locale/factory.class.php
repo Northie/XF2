@@ -17,5 +17,11 @@ class factory extends \libs\_factory {
 
 		return $o;
 	}
+    
+    public static function BuildHelper($helper) {
+        $class = __NAMESPACE__."\\helpers".$helper."Helper";
+        $o = new $class;
+        return $o;
+    }
 
 }

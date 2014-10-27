@@ -6,6 +6,7 @@ class locale {
     public function __construct($locale=FALSE) {
         if(!$locale) {
             //get default
+            $locale = 'en_GB';
         }
         
         //load translations
@@ -20,10 +21,17 @@ class locale {
     
     public function format ($value) {
         $this->formatValue = $value;
+        return $this;
     }
     
     public function with($type) {
         $this->formatType = $type;
+        //check we have a record to match $type
+        //find callback formatter
+        //call callback with value $this->formatValue
+        //return output
+        //else
+        return $this->formatValue;
     }
     
     public function symbol($symbol) {
