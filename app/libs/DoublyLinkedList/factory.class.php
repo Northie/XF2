@@ -2,7 +2,7 @@
 
 namespace libs\DoublyLinkedList;
 
-class factory extends _factory {
+class factory extends \libs\_factory {
 
 	use \libs\factory;
 
