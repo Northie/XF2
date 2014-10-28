@@ -21,7 +21,7 @@ class Tools {
 		return $_GET;
 	}
 
-	public static function generatePassword($len = 8, $selection = 'lower', $removeConfusing = 1) {
+	public static function generatePassword($len = 8, $selection = 'lower', $removeConfusing = true) {
 
 		$lower = 'abcdefghijklmnopqrstuvwxyz';
 		$upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -47,7 +47,7 @@ class Tools {
 				break;
 		}
 
-		if ($removeConfusing > 0) {
+		if ($removeConfusing) {
 			$str = str_replace($confusing, '', $str);
 		}
 
@@ -61,28 +61,18 @@ class Tools {
 	}
 
 	public static function hashPassword($plain) {
-		//old
-		//$hash = sha1($password.md5($password))."-".md5($password.sha1($password));
-		//return $hash;
-		//new
-		$password = new \libs\misc\password;
+		$password = new \utils\password;
 		$hashed = $password->getHashToStore($plain);
 		return $hashed;
 	}
 
-	public static function hashPasswordOld($password) {
-		//old
-		$hash = sha1($password . md5($password)) . "-" . md5($password . sha1($password));
-		return $hash;
-	}
-
 	public static function encryptStr($msg, $key) {
-		$c = new \libs\misc\Crypto;
+		$c = new \utils\Crypto;
 		return $c->encrypt($msg, $key);
 	}
 
 	public static function decryptStr($msg, $key) {
-		$c = new \libs\misc\Crypto;
+		$c = new \utils\Crypto;
 		return $c->decrypt($msg, $key);
 	}
 
@@ -111,82 +101,6 @@ class Tools {
 		$str[0] = strtolower($str[0]);
 
 		return $str;
-	}
-
-	public static function is_unid($str) {
-		$pattern = "/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/";
-
-		return preg_match($pattern, $str) ? true : false;
-	}
-
-	public static function is_email($str, &$email = false) {
-
-		if (filter_var($str, FILTER_VALIDATE_EMAIL)) {
-			$email = $str;
-			return true;
-		}
-
-		$str = filter_var($str, FILTER_SANITIZE_EMAIL);
-
-		if (filter_var($str, FILTER_VALIDATE_EMAIL)) {
-			$email = $str;
-			return false;
-		}
-
-		return false;
-	}
-
-	public static function is_url($str, $url = false) {
-		if (filter_var($str, FILTER_VALIDATE_URL)) {
-			$email = $str;
-			return true;
-		}
-
-		$str = filter_var($str, FILTER_SANITIZE_URL);
-
-		if (filter_var($str, FILTER_VALIDATE_URL)) {
-			$email = $str;
-			return false;
-		}
-
-		return false;
-	}
-
-	public static function is_ip($str) {
-		return filter_var($str, FILTER_VALIDATE_IP);
-	}
-
-	public static function json_to_ext($input) {
-		if (is_array($input)) {
-			$str = json_encode($input);
-		} else {
-			$str = $input;
-		}
-
-		$pattern = "/\"[a-zA-Z0-9]+\"\:/";
-
-		preg_match_all($pattern, $str, $matches);
-
-		$find = $replace = array();
-
-		foreach ($matches[0] as $match) {
-			$f = $match;
-			$r = str_replace('"', '', $match);
-
-			if (!in_array($f, $find)) {
-				$find[] = $f;
-			}
-
-			if (!in_array($r, $replace)) {
-				$replace[] = $r;
-			}
-		}
-
-		return str_replace($find, $replace, $str);
-	}
-
-	public static function isAssoc($arr) {
-		return array_keys($arr) !== range(0, count($arr) - 1);
 	}
 
 	public static function setCache($key, $data, $ttl = 3600) {

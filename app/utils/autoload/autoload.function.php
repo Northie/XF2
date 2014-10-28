@@ -1,10 +1,10 @@
 <?php
 
 function xeneco_autoloader($cls) {
-    
-    $file = \settings\fileList::Load()->getFileForClass($cls);
 
-    $c = \settings\general::Load()->get('XENECO','CONTEXT');
+	$file = \settings\fileList::Load()->getFileForClass($cls);
+
+	$c = \settings\general::Load()->get('XENECO', 'CONTEXT');
 
 	if ($c != 'DEV') {
 
@@ -13,16 +13,16 @@ function xeneco_autoloader($cls) {
 		if ($file != '') {
 			require_once($file);
 		} else {
-            /*
-             * find top level request object,
-             * get request format
-             * issue 404 response if api or package resource requested, else 500
-             */
-            
-            $message = [
-                '404'=>'Not Found',
-            ];
-            
+			/*
+			 * find top level request object,
+			 * get request format
+			 * issue 404 response if api or package resource requested, else 500
+			 */
+
+			$message = [
+				'404'=>'Not Found',
+			];
+
 			header("HTTP/1.1 404 Not Found");
 			echo "<h1>404 File Not Found</h1>";
 			echo "<h3>If you're sure the file exists, try running again in DEV mode</h3>";
@@ -35,10 +35,10 @@ function xeneco_autoloader($cls) {
 		} else {
 
 			//scan files and recompile file list
-            \utils\autoload\fileFinder::ComileFiles();
+			\utils\autoload\fileFinder::ComileFiles();
 
 			\settings\fileList::Load()->includeFileList();
-            
+
 			$file = \settings\fileList::Load()->getFileForClass($cls);
 
 			if ($file != '') {

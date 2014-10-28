@@ -1,9 +1,9 @@
 <?php
 
-namespace services\data\relational\vendor\mysql;
+namespace services\data\relational;
 
 /**
- * DefaultDMO
+ * DMO
  *
  * Given a connection to a database, manage SQL execution returning data where applicable
  * 'Return' values are passed by reference and all public methods return an instance of it's self for chainability
@@ -12,7 +12,7 @@ namespace services\data\relational\vendor\mysql;
  * @package Libs
  * @see DB
  */
-class DefaultDMO {
+class XF_DMO {
 
 	public $conn;
 	private $SQL;
@@ -20,15 +20,8 @@ class DefaultDMO {
 	private $RSrow;
 	private $RSval;
 
-	public function __construct() {
-
-	}
-
-	/**
-	 * Set connection
-	 */
-	public function setConnection(&$link) {
-		$this->conn = &$link;
+	public function __construct($link) {
+		$this->conn = $link;
 	}
 
 	public function beginTransaction() {
@@ -268,6 +261,18 @@ class DefaultDMO {
 		}
 
 		return str_replace($find, $replace, $sql);
+	}
+
+	/**
+	 *
+	 * foreach(DB::Load($conn_name)->Execute($sql,$args)->Generate() as $column => $value) {
+	 *
+	 * }
+	 */
+	public function Generate($mode = \PDO::FETCH_ASSOC) {
+		while ($row = $this->SQL->fetch($mode)) {
+			yeild($row);
+		}
 	}
 
 }
