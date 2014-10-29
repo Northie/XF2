@@ -2,10 +2,10 @@
 
 namespace services\data\relational\vendor\mysql;
 
-class adapter extends services\data\adapter {
+class adapter extends \services\data\adapter {
 
-	public function __construct($key = 'default') {
-		$this->db = DB::Load($key);
+	public function __construct($db) {
+		$this->db = $db;
 	}
 
 	public function create() {

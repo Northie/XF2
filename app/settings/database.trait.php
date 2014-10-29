@@ -4,18 +4,35 @@ namespace settings;
 
 trait database {
 
-    private $settings = [];
+	private $settings = [];
 
-    protected function readSettings() {
-        $settings['default'] = [];
+	protected function readSettings() {
+		$settings['default'] = [];
 
-        $settings['default']['type'] = '';
-        $settings['default']['host'] = '';
-        $settings['default']['user'] = '';
-        $settings['default']['pass'] = '';
-        $settings['default']['name'] = '';
-        
-        $this->settings = $settings;
-    }
-    
+		$settings['default']['type'] = 'mysql';
+		$settings['default']['host'] = 'localhost';
+		$settings['default']['user'] = 'root';
+		$settings['default']['pass'] = 'password';
+		$settings['default']['name'] = 'app';
+
+		$settings['write'] = [];
+
+		$settings['write']['type'] = 'mysql';
+		$settings['write']['host'] = 'master.db.app'; //bypasses load balancer
+		$settings['write']['user'] = 'writer';
+		$settings['write']['pass'] = 'password';
+		$settings['write']['name'] = 'app';
+
+		$settings['read'] = [];
+
+		$settings['read']['type'] = 'mysql';
+		$settings['read']['host'] = 'lb.db.app'; //connect through load balancer
+		$settings['read']['user'] = 'reader';
+		$settings['read']['pass'] = 'password';
+		$settings['read']['name'] = 'app';
+
+
+		$this->settings = &$settings;
+	}
+
 }

@@ -5,7 +5,7 @@ namespace services\data\relational;
 /**
  * DMO
  *
- * Given a connection to a database, manage SQL execution returning data where applicable
+ * Given a connection to a database (PDO, XF_PDO), manage SQL execution returning data where applicable
  * 'Return' values are passed by reference and all public methods return an instance of it's self for chainability
  *
  * @author Chris Rutledge

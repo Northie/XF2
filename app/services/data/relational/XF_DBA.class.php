@@ -2,6 +2,9 @@
 
 namespace services\data\relational;
 
+/**
+ * manage single instances of XF_DMOs
+ */
 class XF_DBA {
 
 	private static $instance;

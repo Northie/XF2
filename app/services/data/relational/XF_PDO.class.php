@@ -2,6 +2,11 @@
 
 namespace services\data\relational;
 
+/**
+ * class XF_PDO
+ *
+ * makes a pdo connection object
+ */
 class XF_PDO {
 
 	private $db_type;
