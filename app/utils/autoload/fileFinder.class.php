@@ -25,6 +25,9 @@ class fileFinder {
 
 		$hooks = array();
 
+        $error_level = ini_get('error_reporting');
+        ini_set('error_reporting',(E_ALL ^ E_NOTICE));  //ignore notices;
+        
 		foreach ($all as $file) {
 
 			set_time_limit(30);
@@ -57,6 +60,8 @@ class fileFinder {
 			}
 		}
 
+        ini_set('error_reporting',$error_level);  //restore error_level
+        
 		$h = array_keys($hooks);
 		sort($h);
 
