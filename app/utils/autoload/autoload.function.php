@@ -5,6 +5,8 @@ function xeneco_autoloader($cls) {
 	$file = \settings\fileList::Load()->getFileForClass($cls);
 
 	$c = \settings\general::Load()->get('XENECO', 'CONTEXT');
+    
+    $c = 'DEV';
 
 	if ($c != 'DEV') {
 
@@ -35,7 +37,7 @@ function xeneco_autoloader($cls) {
 		} else {
 
 			//scan files and recompile file list
-			\utils\autoload\fileFinder::ComileFiles();
+			\utils\autoload\fileFinder::CompileFiles();
 
 			\settings\fileList::Load()->includeFileList();
 

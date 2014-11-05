@@ -2,7 +2,7 @@
 
 namespace settings;
 
-trait database {
+trait _database {
 
 	private $settings = [];
 

@@ -2,7 +2,7 @@
 
 namespace settings;
 
-trait settings {
+trait _settings {
 
 	public function set($key, $value) {
 		if (is_array($key)) {

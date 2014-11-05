@@ -1,5 +1,5 @@
 <?php
-namespace \utils\traits;
+namespace utils\traits;
 
 trait singleton {
     public static $_instance;

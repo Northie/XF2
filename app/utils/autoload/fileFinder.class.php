@@ -60,7 +60,7 @@ class fileFinder {
 		$h = array_keys($hooks);
 		sort($h);
 
-		file_put_contents(\XENECO_PATH . 'class-list.php', "<?php\n\n" . $lines);
+		file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', "<?php\n\n" . $lines);
 		file_put_contents(\XENECO_PATH . 'hook-list.txt', implode("\n", $h));
 
 		//echo "class list written";
@@ -100,6 +100,9 @@ class fileFinder {
 		$a = token_get_all($c);
 
 		for ($i = 0; $i < count($a); $i++) {
+            
+            //echo "==<pre>\n".$a[$i][0]."\n".$a[$i][1]."\n</pre>==<br />\n";
+           
 
 			if (strtolower($a[$i][1]) == 'namespace') {
 				$j = 1;
@@ -116,7 +119,7 @@ class fileFinder {
 				}
 				$namespaces[] = trim($namespace);
 				$i+=$j;
-				//echo "Logging Nmaespace ".$namespace.".....\n";
+				echo "Logging Nmaespace ".$namespace.".....\n";
 			}
 
 			if (strtolower($a[$i][1]) == 'class') {
@@ -135,7 +138,7 @@ class fileFinder {
 
 				$classes[] = trim($class);
 				$i+=$j;
-				//echo "Logging Class ".$class.".....\n";
+				echo "Logging Class ".$class.".....\n";
 			}
 
 			if (strtolower($a[$i][1]) == 'interface') {
@@ -154,7 +157,7 @@ class fileFinder {
 
 				$interfaces[] = trim($interface);
 				$i+=$j;
-				//echo "Logging Interface ".$interface.".....\n";
+				echo "Logging Interface ".$interface.".....\n";
 			}
 
 			if (strtolower($a[$i][1]) == 'trait') {
@@ -173,7 +176,7 @@ class fileFinder {
 
 				$traits[] = trim($trait);
 				$i+=$j;
-				//echo "Logging Trait ".$trait.".....\n";
+				echo "Logging Trait ".$trait.".....\n";
 			}
 		}
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers\web;
+namespace flow\controllers\web;
 
 class FrontController extends \flow\controller {
 
@@ -8,8 +8,8 @@ class FrontController extends \flow\controller {
 
 		parent::__construct();
 
-		//what is the request?
-		//$request = new
+		var_dump($this->request);
+        die();
 	}
 
 }

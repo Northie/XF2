@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers\api;
+namespace flow\controllers\api;
 
 class FrontController {
 	

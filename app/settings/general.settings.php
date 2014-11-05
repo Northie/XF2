@@ -4,8 +4,8 @@ namespace settings;
 
 class general {
 	use \utils\traits\singleton;
-use general;
-use settings;
+    use _general;
+    use _settings;
 
 	private function __construct() {
 		$this->readSettings();

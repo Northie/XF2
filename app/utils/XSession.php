@@ -22,7 +22,7 @@ class XSession {
 		}
 	}
 
-	public static function Load($ns) {
+	public static function Load($ns='') {
 		if (!isset(self::$instance)) {
 			$c = __CLASS__;
 			self::$instance = new $c($ns);

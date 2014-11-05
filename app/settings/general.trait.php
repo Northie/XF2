@@ -2,7 +2,7 @@
 
 namespace settings;
 
-trait general {
+trait _general {
 
 	protected $settings = [];
 

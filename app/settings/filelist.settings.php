@@ -4,7 +4,7 @@ namespace settings;
 
 class fileList {
     use \utils\traits\singleton;
-    use settings;
+    use _settings;
     
     private $classList = [];
      

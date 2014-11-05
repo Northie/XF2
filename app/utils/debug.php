@@ -25,7 +25,7 @@ class debug {
 	}
 
 	public static function printComment($var) {
-		echo "<!-- \n" . self::printNice($var, 1) . "\n -->";
+		echo "<!-- \n" , self::printNice($var, 1) , "\n -->";
 	}
 
 	public static function FirePHP($var) {

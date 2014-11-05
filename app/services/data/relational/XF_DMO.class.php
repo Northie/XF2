@@ -264,8 +264,8 @@ class XF_DMO {
 	}
 
 	/**
-	 *
-	 * foreach(DB::Load($conn_name)->Execute($sql,$args)->Generate() as $column => $value) {
+	 * //for large datasets where retrieving all rows takes too much memory
+	 * foreach(XF_DBA::Load($conn_name)->Execute($sql,$args)->Generate() as $column => $value) {
 	 *
 	 * }
 	 */
