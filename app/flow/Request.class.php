@@ -11,6 +11,7 @@ class Request {
 	public function __construct($server = false) {
 
         if(!$server) {
+            //if no $_SERVER then throw exception? should come from cli.php?
             $server = $_SERVER;
         }
         
