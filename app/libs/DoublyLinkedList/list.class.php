@@ -38,7 +38,7 @@ class linkedList {
 	}
 
 	public function push($data, $contains) {
-		$this->insertLast($data);
+		$this->insertLast($data, $contains);
 	}
 
 	public function insertLast($data, $contains = false) {
