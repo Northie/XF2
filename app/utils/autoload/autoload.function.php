@@ -5,8 +5,8 @@ function xeneco_autoloader($cls) {
 	$file = \settings\fileList::Load()->getFileForClass($cls);
 
 	$c = \settings\general::Load()->get('XENECO', 'CONTEXT');
-    
-    $c = 'DEV';
+
+	$c = 'DEV';
 
 	if ($c != 'DEV') {
 

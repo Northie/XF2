@@ -5,20 +5,20 @@ namespace flow;
 class Request {
 
 	private $requestKey = '';
-    private $ajax = false;
-    private $dynamic = [];
+	private $ajax = false;
+	private $dynamic = [];
 
 	public function __construct($server = false) {
 
-        if(!$server) {
-            //if no $_SERVER then throw exception? should come from cli.php?
-            $server = $_SERVER;
-        }
-        
-        foreach($server as $key => $val) {
-            $this->__set($key,$val);
-        }
-        
+		if (!$server) {
+			//if no $_SERVER then throw exception? should come from cli.php?
+			$server = $_SERVER;
+		}
+
+		foreach ($server as $key=> $val) {
+			$this->__set($key, $val);
+		}
+
 		$this->requestKey = uniqid();
 
 		$realms = \settings\general::Load()->getRealms(true);
@@ -45,27 +45,26 @@ class Request {
 		if (!$realmSet) {
 
 		}
-        
-        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            $this->ajax = true;
-        }
 
-        
+		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+			$this->ajax = true;
+		}
 	}
-    
-    public function isAjax() {
-        return $this->ajax;
-    }
-    
-    public function setIsAjax($set=true) {
-        $this->ajax = $set;
-    }
 
-    public function __get($key) {
-        return $this->dynamic[$key];
-    }
-    
-    public function __set($key,$val) {
-        $this->dynamic[$key] = $val;
-    }
+	public function isAjax() {
+		return $this->ajax;
+	}
+
+	public function setIsAjax($set = true) {
+		$this->ajax = $set;
+	}
+
+	public function __get($key) {
+		return $this->dynamic[$key];
+	}
+
+	public function __set($key, $val) {
+		$this->dynamic[$key] = $val;
+	}
+
 }

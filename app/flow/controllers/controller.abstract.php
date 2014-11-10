@@ -4,7 +4,8 @@ namespace flow;
 
 abstract class controller {
 
-	public $filters = ['default', 'domain', 'security', 'data', 'view', 'action'];
+	//public $filters = ['default', 'domain', 'security', 'data', 'view', 'action'];
+	public $filters = ['test'];
 	public $request;
 	public $response;
 

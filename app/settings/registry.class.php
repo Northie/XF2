@@ -6,10 +6,8 @@ namespace settings;
  * \settings\registry::Load()->set('REALM','DEFAULT');
  */
 class registry {
-
 	use \utils\traits\singleton;
-
-	private $settings = [];
+use _settings;
 
 	private function __construct() {
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace flow\filters;
+
 trait filter {
 
 	public function __construct() {
@@ -19,7 +21,7 @@ trait filter {
 	}
 
 	public function RWD() {
-		
+
 	}
 
 }
