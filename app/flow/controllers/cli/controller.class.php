@@ -100,6 +100,8 @@ class FrontController extends \flow\controller {
 		$endpoint = $_SERVER['argv'][$use];
 
 		$_SERVER['REQUEST_URI'] = "/v" . $version . "/" . $endpoint;
+		
+		$GLOBALS['_'.$method] = $_REQUEST;
 
 		getArgs($use + 1);
 	}
