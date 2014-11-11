@@ -4,20 +4,17 @@ namespace libs\DoublyLinkedList;
 
 class node {
 
-	public $data;
-	public $key;
+	//public $data;
+	public $label;
 	public $next;
 	public $previous;
 
-	function __construct($data) {
-		$this->data = $data;
-		if ($key) {
-			$this->key = $key;
-		}
+	function __construct($label) {
+		$this->label = $label;
 	}
 
 	public function readNode() {
-		return $this->data;
+		return $this->label;
 	}
 
 }

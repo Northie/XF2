@@ -20,7 +20,7 @@ class linkedList {
 		return ($this->firstNode == NULL);
 	}
 
-	public function insertFirst((string) $key, $value = false) {
+	public function insertFirst(string $key, $value = false) {
 		$newLink = new node($key);
 
 		$this->index[$key] = $newLink;
@@ -146,7 +146,7 @@ class linkedList {
 
 		$temp = $this->firstNode;
 
-		unset($this->index[$this->firstNode->data]);
+		unset($this->index[$this->firstNode->label]);
 
 		if ($this->firstNode->next == NULL) {
 			$this->lastNode = NULL;
@@ -166,7 +166,7 @@ class linkedList {
 
 		$temp = $this->lastNode;
 
-		unset($this->index[$this->lastNode->data]);
+		unset($this->index[$this->lastNode->label]);
 
 		if ($this->firstNode->next == NULL) {
 			$this->firstNode = NULL;
@@ -250,9 +250,21 @@ class linkedList {
 		return $this->count;
 	}
     
-    public function search($search) {
+    public function getNode($search) {
         $current = $this->index[$search];
         return $current;
+    }
+    
+    public function getNodeValue($search) {
+        return $this->values[$search];
+    }
+    
+    public function getLastNode() {
+        return $this->lastNode;
+    }
+    
+    public function getFirstNode() {
+        return $this->firstNode;
     }
 
 }

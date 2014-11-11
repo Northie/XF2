@@ -1,12 +1,15 @@
 <?php
 
 $classlist['flow\controllers\api\FrontController'] = 'C:\xampp\htdocs\XF2\app\flow\controllers\api\controller.class.php';
+$classlist['flow\controllers\cli\FrontController'] = 'C:\xampp\htdocs\XF2\app\flow\controllers\cli\controller.class.php';
 $classlist['flow\controller'] = 'C:\xampp\htdocs\XF2\app\flow\controllers\controller.abstract.php';
 $classlist['flow\controllers\web\FrontController'] = 'C:\xampp\htdocs\XF2\app\flow\controllers\web\controller.class.php';
-$classlist['filter'] = 'C:\xampp\htdocs\XF2\app\flow\filters\filter.trait.php';
+$classlist['flow\filters\actionFilter'] = 'C:\xampp\htdocs\XF2\app\flow\filters\actionFilter.class.php';
+$classlist['flow\filters\filter'] = 'C:\xampp\htdocs\XF2\app\flow\filters\filter.trait.php';
 $classlist['flow\filters\FilterList'] = 'C:\xampp\htdocs\XF2\app\flow\filters\FilterList.class.php';
+$classlist['flow\filters\testFilter'] = 'C:\xampp\htdocs\XF2\app\flow\filters\testFilter.class.php';
 $classlist['flow\Request'] = 'C:\xampp\htdocs\XF2\app\flow\Request.class.php';
-$classlist['flow\Ressponse'] = 'C:\xampp\htdocs\XF2\app\flow\Response.class.php';
+$classlist['flow\Response'] = 'C:\xampp\htdocs\XF2\app\flow\Response.class.php';
 $classlist['libs\DoublyLinkedList\factory'] = 'C:\xampp\htdocs\XF2\app\libs\DoublyLinkedList\factory.class.php';
 $classlist['libs\DoublyLinkedList\linkedList'] = 'C:\xampp\htdocs\XF2\app\libs\DoublyLinkedList\list.class.php';
 $classlist['libs\DoublyLinkedList\node'] = 'C:\xampp\htdocs\XF2\app\libs\DoublyLinkedList\node.class.php';

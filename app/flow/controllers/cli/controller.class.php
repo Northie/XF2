@@ -13,7 +13,7 @@ class FrontController extends \flow\controller {
 		$cliServerArgs = $_SERVER;
 
 		$this->request = new \flow\Request($cliServerArgs);
-		$this->response = new \flow\Ressponse;
+		$this->response = new \flow\Response;
 
 		$this->filterList = \libs\DoublyLinkedList\factory::Build();
 

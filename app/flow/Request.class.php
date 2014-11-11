@@ -6,6 +6,7 @@ class Request {
 
 	private $requestKey = '';
     private $ajax = false;
+    private $https = false;
     private $dynamic = [];
 
 	public function __construct($server = false) {
@@ -23,14 +24,23 @@ class Request {
 
 		$realms = \settings\general::Load()->getRealms(true);
 
-		$url = $_SERVER['REQUEST_URI'];
+        $this->HTTP_SCHEME = 'http://';
+        
+        if($this->HTTPS == 'on') {
+            $this->HTTP_SCHEME = 'https://';
+            $this->setIsHTTPS();
+        }
+        
+                        
+        $url = $this->HTTP_SCHEME.$this->HTTP_HOST.$this->REQUEST_URI;
 
 		$request = parse_url($url);
 
 		//handle cli into $request?
 		$realmSet = false;
 		foreach ($realms as $realm=> $details) {
-			if ($details['DOMAIN'] == $request['host'] && strpos($request['path'], $details['PATH']) === 0) {
+
+			if ($details['DOMAIN'] == $request['host'] && strpos($request['path'], $details['WEB_PATH']) === 0) {
 
 				$endpoint = preg_replace("/^" . $details['PATH'] . "/", "", $request['path']);
 
@@ -43,7 +53,7 @@ class Request {
 		}
 
 		if (!$realmSet) {
-
+            die('no realm set');
 		}
         
         if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
@@ -61,6 +71,14 @@ class Request {
         $this->ajax = $set;
     }
 
+    public function isHTTPS() {
+        return $this->ajax;
+    }
+    
+    public function setIsHTTPS($set=true) {
+        $this->https = $set;
+    }
+    
     public function __get($key) {
         return $this->dynamic[$key];
     }
