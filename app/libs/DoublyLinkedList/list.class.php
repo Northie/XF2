@@ -60,27 +60,12 @@ class linkedList {
 
 	public function insertAfter($search, $key, $value = false) {
 
-		//*
         $current = $this->index[$search];
 
         if ($current == NULL) {
             return false;
         }
-		// */
-
-		/*
-
-		$current = $this->firstNode;
-
-		while ($current->data != $search) {
-			$current = $current->next;
-
-			if ($current == NULL) {
-				return false;
-			}
-		}
-		//*/
-
+        
 		$newLink = new node($key);
 
 		$this->index[$key] = $newLink;
@@ -102,26 +87,12 @@ class linkedList {
 	}
 
 	public function insertBefore($search, $key, $value = false) {
-
-		//*
+        
         $current = $this->index[$search];
 
         if ($current == NULL) {
             return false;
         }
-		// */
-
-		/*
-		$current = $this->firstNode;
-
-		while ($current->data != $search) {
-			$current = $current->next;
-
-			if ($current == NULL)
-				return false;
-		}
-		//*/
-
 		$newLink = new node($key);
 
 		$this->index[$key] = $newLink;
@@ -182,15 +153,6 @@ class linkedList {
 	public function deleteNode($search) {
 
 		$current = $this->index[$search];
-		/*
-		$current = $this->firstNode;
-
-		while ($current->data != $search) {
-			$current = $current->next;
-			if ($current == NULL)
-				return null;
-		}
-		//*/
 
 		if ($current == $this->firstNode) {
 			$this->firstNode = $current->next;
@@ -259,11 +221,19 @@ class linkedList {
         return $this->values[$search];
     }
     
-    public function getLastNode() {
+    public function getLastNode($value=false) {
+        if($value) {
+            return $this->values[$this->lastNode->label];
+        }
         return $this->lastNode;
     }
     
-    public function getFirstNode() {
+    public function getFirstNode($value=false) {
+        
+        if($value) {
+            return $this->values[$this->firstNode->label];
+        }
+        
         return $this->firstNode;
     }
 

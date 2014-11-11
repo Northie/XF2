@@ -25,11 +25,7 @@ abstract class controller {
 	}
     
     public function Execute() {
-        
-        //$c = $this->filterList->exportForward(1);
-
-        
-        $start = $this->filterList->getNodeValue($this->filters[0],1);
+        $start = $this->filterList->getFirstNode(true);
         $start->in();
     }
 
