@@ -8,7 +8,7 @@ class linkedList {
 	private $lastNode;
 	private $count;
 	private $index = [];
-	private $container = [];
+	private $values = [];
 
 	function __construct() {
 		$this->firstNode = NULL;
@@ -20,11 +20,11 @@ class linkedList {
 		return ($this->firstNode == NULL);
 	}
 
-	public function insertFirst($data, $contains = false) {
-		$newLink = new node($data);
+	public function insertFirst((string) $key, $value = false) {
+		$newLink = new node($key);
 
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
 
 		if ($this->isEmpty()) {
 			$this->lastNode = $newLink;
@@ -37,15 +37,15 @@ class linkedList {
 		$this->count++;
 	}
 
-	public function push($data, $contains) {
-		$this->insertLast($data, $contains);
+	public function push($key, $value) {
+		$this->insertLast($key, $value);
 	}
 
-	public function insertLast($data, $contains = false) {
-		$newLink = new node($data);
+	public function insertLast($key, $value = false) {
+		$newLink = new node($key);
 
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
 
 		if ($this->isEmpty()) {
 			$this->firstNode = $newLink;
@@ -58,21 +58,21 @@ class linkedList {
 		$this->count++;
 	}
 
-	public function insertAfter($key, $data, $contains = false) {
-
-		/*
-		  $current = $this->index[$key];
-
-		  if ($current == NULL) {
-		  return false;
-		  }
-		  // */
+	public function insertAfter($search, $key, $value = false) {
 
 		//*
+        $current = $this->index[$search];
+
+        if ($current == NULL) {
+            return false;
+        }
+		// */
+
+		/*
 
 		$current = $this->firstNode;
 
-		while ($current->data != $key) {
+		while ($current->data != $search) {
 			$current = $current->next;
 
 			if ($current == NULL) {
@@ -81,10 +81,10 @@ class linkedList {
 		}
 		//*/
 
-		$newLink = new node($data);
+		$newLink = new node($key);
 
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
 
 		if ($current == $this->lastNode) {
 			$newLink->next = NULL;
@@ -101,20 +101,20 @@ class linkedList {
 		return true;
 	}
 
-	public function insertBefore($key, $data, $contains = false) {
-
-		/*
-		  $current = $this->index[$key];
-
-		  if ($current == NULL) {
-		  return false;
-		  }
-		  // */
+	public function insertBefore($search, $key, $value = false) {
 
 		//*
+        $current = $this->index[$search];
+
+        if ($current == NULL) {
+            return false;
+        }
+		// */
+
+		/*
 		$current = $this->firstNode;
 
-		while ($current->data != $key) {
+		while ($current->data != $search) {
 			$current = $current->next;
 
 			if ($current == NULL)
@@ -122,10 +122,10 @@ class linkedList {
 		}
 		//*/
 
-		$newLink = new node($data);
+		$newLink = new node($key);
 
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
 
 		if ($current == $this->firstNode) {
 			$newLink->next = NULL;
@@ -179,13 +179,13 @@ class linkedList {
 		return $temp;
 	}
 
-	public function deleteNode($key) {
+	public function deleteNode($search) {
 
-		//$current = $this->index[$key];
-		//*
+		$current = $this->index[$search];
+		/*
 		$current = $this->firstNode;
 
-		while ($current->data != $key) {
+		while ($current->data != $search) {
 			$current = $current->next;
 			if ($current == NULL)
 				return null;
@@ -204,21 +204,21 @@ class linkedList {
 			$current->next->previous = $current->previous;
 		}
 
-		unset($this->index[$key]);
+		unset($this->index[$search]);
 
 		$this->count--;
 		return $current;
 	}
 
-	public function exportForward($withContainer = false) {
+	public function exportForward($withValues = false) {
 
 		$current = $this->firstNode;
 
 		$a = array();
 
 		while ($current != NULL) {
-			if ($withContainer) {
-				$a[$current->readNode()] = $this->container[$current->readNode()];
+			if ($withValues) {
+				$a[$current->readNode()] = $this->values[$current->readNode()];
 			} else {
 				$a[] = $current->readNode();
 			}
@@ -228,15 +228,15 @@ class linkedList {
 		return $a;
 	}
 
-	public function exportBackward($withContainer = false) {
+	public function exportBackward($withValues = false) {
 
 		$current = $this->lastNode;
 
 		$a = array();
 
 		while ($current != NULL) {
-			if ($withContainer) {
-				$a[$current->readNode()] = $this->container[$current->readNode()];
+			if ($withValues) {
+				$a[$current->readNode()] = $this->values[$current->readNode()];
 			} else {
 				$a[] = $current->readNode();
 			}
@@ -249,5 +249,10 @@ class linkedList {
 	public function total() {
 		return $this->count;
 	}
+    
+    public function search($search) {
+        $current = $this->index[$search];
+        return $current;
+    }
 
 }
