@@ -2,13 +2,14 @@
 
 namespace libs\DoublyLinkedList;
 
-class linkedList {
+class linkedList implements \Traversable {
 
 	private $firstNode;
 	private $lastNode;
 	private $count;
 	private $index = [];
 	private $values = [];
+    private $position = '';
 
 	function __construct() {
 		$this->firstNode = NULL;
@@ -34,6 +35,7 @@ class linkedList {
 
 		$newLink->next = $this->firstNode;
 		$this->firstNode = $newLink;
+        
 		$this->count++;
 	}
 
@@ -236,5 +238,40 @@ class linkedList {
         
         return $this->firstNode;
     }
-
+    
+    //methods to implemnet Iterator and Traversable:
+    
+    public function current () {
+        if(!$this->position) {
+            $this->position = $this->firstNode->label;
+        }
+        return $this->index[$this->position];
+    }
+    
+    public function key () {
+        if(!$this->position) {
+            $this->position = $this->firstNode->label;
+        }
+        return $this->position;
+    }
+    
+    public function next ( ) {
+        if(!$this->position) {
+            $this->position = $this->firstNode->label;
+        }
+        
+        $return = $this->index[$this->position]->next;
+        
+        $this->position = $return->label;
+        
+        return $r;
+    }
+    
+    public function rewind ( ) {
+        $this->position = $this->firstNode->label;
+    }
+    
+    public function valid () {
+        return isset($this->index[$this->position]);
+    }
 }
