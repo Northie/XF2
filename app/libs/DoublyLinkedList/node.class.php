@@ -4,7 +4,7 @@ namespace libs\DoublyLinkedList;
 
 class node {
 
-	//public $data;
+	public $data;
 	public $label;
 	public $next;
 	public $previous;

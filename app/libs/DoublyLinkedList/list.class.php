@@ -26,6 +26,7 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		$this->index[$key] = $newLink;
 		$this->values[$key] = $value;
+        $newLink->setData($value);
 
 		if ($this->isEmpty()) {
 			$this->lastNode = $newLink;
@@ -48,6 +49,8 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		$this->index[$key] = $newLink;
 		$this->values[$key] = $value;
+        
+        $newLink->setData($value);
 
 		if ($this->isEmpty()) {
 			$this->firstNode = $newLink;
@@ -69,6 +72,8 @@ class linkedList implements \Iterator { //which implements Traversable
         }
         
 		$newLink = new node($key);
+        $newLink->setData($value);
+        
 
 		$this->index[$key] = $newLink;
 		$this->values[$key] = $value;
@@ -96,6 +101,7 @@ class linkedList implements \Iterator { //which implements Traversable
             return false;
         }
 		$newLink = new node($key);
+        $newLink->setData($value);
 
 		$this->index[$key] = $newLink;
 		$this->values[$key] = $value;
@@ -182,9 +188,10 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		while ($current != NULL) {
 			if ($withValues) {
-				$a[$current->readNode()] = $this->values[$current->readNode()];
+				//$a[$current->getLabel()] = $this->values[$current->getLabel()];
+                $a[$current->getLabel()] = $current->getData();
 			} else {
-				$a[] = $current->readNode();
+				$a[] = $current->getLabel();
 			}
 			$current = $current->next;
 		}
@@ -200,9 +207,10 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		while ($current != NULL) {
 			if ($withValues) {
-				$a[$current->readNode()] = $this->values[$current->readNode()];
+				//$a[$current->getLabel()] = $this->values[$current->getLabel()];
+                $a[$current->getLabel()] = $current->getData();
 			} else {
-				$a[] = $current->readNode();
+				$a[] = $current->getLabel();
 			}
 			$current = $current->previous;
 		}
@@ -215,17 +223,23 @@ class linkedList implements \Iterator { //which implements Traversable
 	}
     
     public function getNode($search) {
-        $current = $this->index[$search];
-        return $current;
+        //$current = $this->index[$search];
+        //return $current;
+        return $this->index[$search];
     }
     
     public function getNodeValue($search) {
-        return $this->values[$search];
+        //return $this->values[$search];
+        if($this->index[$search]) {
+            return $this->index[$search]->getData();
+        }
+        return false;
     }
     
     public function getLastNode($value=false) {
         if($value) {
-            return $this->values[$this->lastNode->label];
+            //return $this->values[$this->lastNode->label];
+            return $this->lastNode->getData();
         }
         return $this->lastNode;
     }
@@ -233,7 +247,8 @@ class linkedList implements \Iterator { //which implements Traversable
     public function getFirstNode($value=false) {
         
         if($value) {
-            return $this->values[$this->firstNode->label];
+            //return $this->values[$this->firstNode->label];
+            return $this->firstNode->getData();
         }
         
         return $this->firstNode;
@@ -243,32 +258,32 @@ class linkedList implements \Iterator { //which implements Traversable
     
     public function current () {
         if(!$this->position) {
-            $this->position = $this->firstNode->label;
+            $this->position = $this->firstNode->getLabel();
         }
         return $this->index[$this->position];
     }
     
     public function key () {
         if(!$this->position) {
-            $this->position = $this->firstNode->label;
+            $this->position = $this->firstNode->getLabel();
         }
         return $this->position;
     }
     
     public function next ( ) {
         if(!$this->position) {
-            $this->position = $this->firstNode->label;
+            $this->position = $this->firstNode->getLabel();
         }
         
-        $return = $this->index[$this->position]->next;
+        $return = $this->index[$this->position]->getNext();
         
-        $this->position = $return->label;
+        $this->position = $return->getLabel();
         
         return $r;
     }
     
     public function rewind ( ) {
-        $this->position = $this->firstNode->label;
+        $this->position = $this->firstNode->getLabel();
     }
     
     public function valid () {
