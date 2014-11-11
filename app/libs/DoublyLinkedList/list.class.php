@@ -2,7 +2,7 @@
 
 namespace libs\DoublyLinkedList;
 
-class linkedList implements \Traversable {
+class linkedList implements \Iterator { //which implements Traversable
 
 	private $firstNode;
 	private $lastNode;
