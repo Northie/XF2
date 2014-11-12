@@ -20,10 +20,10 @@ trait _general {
 		$settings['REALMS'] = [];
 
 		$settings['REALMS']['DEFAULT'] = [
-			'DOMAIN'=>'local.xf2',
-			'DOCUMENT_ROOT'=>$_SERVER['DOCUMENT_ROOT'],
-			'APP_PATH'=>$_SERVER['DOCUMENT_ROOT'] . '/../',
-			'WEB_PATH'=>'/'
+			'DOMAIN'=>'localhost',
+			'DOCUMENT_ROOT'=>$_SERVER['DOCUMENT_ROOT'].'/xf2/www',
+			'APP_PATH'=>$_SERVER['DOCUMENT_ROOT'] . '/xf2/app',
+			'WEB_PATH'=>'/xf2/www'
 		];
 		$settings['REALMS']['ADMIN'] = [
 			'DOMAIN'=>'local.xf2',

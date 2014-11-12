@@ -2,13 +2,14 @@
 
 namespace libs\DoublyLinkedList;
 
-class linkedList {
+class linkedList implements \Iterator { //which implements Traversable
 
 	private $firstNode;
 	private $lastNode;
 	private $count;
 	private $index = [];
-	private $container = [];
+	private $values = [];
+    private $position = '';
 
 	function __construct() {
 		$this->firstNode = NULL;
@@ -20,11 +21,12 @@ class linkedList {
 		return ($this->firstNode == NULL);
 	}
 
-	public function insertFirst($data, $contains = false) {
-		$newLink = new node($data);
+	public function insertFirst(string $key, $value = false) {
+		$newLink = new node($key);
 
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
+        $newLink->setData($value);
 
 		if ($this->isEmpty()) {
 			$this->lastNode = $newLink;
@@ -34,18 +36,21 @@ class linkedList {
 
 		$newLink->next = $this->firstNode;
 		$this->firstNode = $newLink;
+        
 		$this->count++;
 	}
 
-	public function push($data, $contains) {
-		$this->insertLast($data, $contains);
+	public function push($key, $value) {
+		$this->insertLast($key, $value);
 	}
 
-	public function insertLast($data, $contains = false) {
-		$newLink = new node($data);
+	public function insertLast($key, $value = false) {
+		$newLink = new node($key);
 
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
+        
+        $newLink->setData($value);
 
 		if ($this->isEmpty()) {
 			$this->firstNode = $newLink;
@@ -58,33 +63,20 @@ class linkedList {
 		$this->count++;
 	}
 
-	public function insertAfter($key, $data, $contains = false) {
+	public function insertAfter($search, $key, $value = false) {
 
-		/*
-		  $current = $this->index[$key];
+        $current = $this->index[$search];
 
-		  if ($current == NULL) {
-		  return false;
-		  }
-		  // */
+        if ($current == NULL) {
+            return false;
+        }
+        
+		$newLink = new node($key);
+        $newLink->setData($value);
+        
 
-		//*
-
-		$current = $this->firstNode;
-
-		while ($current->data != $key) {
-			$current = $current->next;
-
-			if ($current == NULL) {
-				return false;
-			}
-		}
-		//*/
-
-		$newLink = new node($data);
-
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
 
 		if ($current == $this->lastNode) {
 			$newLink->next = NULL;
@@ -101,31 +93,18 @@ class linkedList {
 		return true;
 	}
 
-	public function insertBefore($key, $data, $contains = false) {
+	public function insertBefore($search, $key, $value = false) {
+        
+        $current = $this->index[$search];
 
-		/*
-		  $current = $this->index[$key];
+        if ($current == NULL) {
+            return false;
+        }
+		$newLink = new node($key);
+        $newLink->setData($value);
 
-		  if ($current == NULL) {
-		  return false;
-		  }
-		  // */
-
-		//*
-		$current = $this->firstNode;
-
-		while ($current->data != $key) {
-			$current = $current->next;
-
-			if ($current == NULL)
-				return false;
-		}
-		//*/
-
-		$newLink = new node($data);
-
-		$this->index[$data] = $newLink;
-		$this->container[$data] = $contains;
+		$this->index[$key] = $newLink;
+		$this->values[$key] = $value;
 
 		if ($current == $this->firstNode) {
 			$newLink->next = NULL;
@@ -146,7 +125,7 @@ class linkedList {
 
 		$temp = $this->firstNode;
 
-		unset($this->index[$this->firstNode->data]);
+		unset($this->index[$this->firstNode->label]);
 
 		if ($this->firstNode->next == NULL) {
 			$this->lastNode = NULL;
@@ -166,7 +145,7 @@ class linkedList {
 
 		$temp = $this->lastNode;
 
-		unset($this->index[$this->lastNode->data]);
+		unset($this->index[$this->lastNode->label]);
 
 		if ($this->firstNode->next == NULL) {
 			$this->firstNode = NULL;
@@ -179,18 +158,9 @@ class linkedList {
 		return $temp;
 	}
 
-	public function deleteNode($key) {
+	public function deleteNode($search) {
 
-		//$current = $this->index[$key];
-		//*
-		$current = $this->firstNode;
-
-		while ($current->data != $key) {
-			$current = $current->next;
-			if ($current == NULL)
-				return null;
-		}
-		//*/
+		$current = $this->index[$search];
 
 		if ($current == $this->firstNode) {
 			$this->firstNode = $current->next;
@@ -204,23 +174,24 @@ class linkedList {
 			$current->next->previous = $current->previous;
 		}
 
-		unset($this->index[$key]);
+		unset($this->index[$search]);
 
 		$this->count--;
 		return $current;
 	}
 
-	public function exportForward($withContainer = false) {
+	public function exportForward($withValues = false) {
 
 		$current = $this->firstNode;
 
 		$a = array();
 
 		while ($current != NULL) {
-			if ($withContainer) {
-				$a[$current->readNode()] = $this->container[$current->readNode()];
+			if ($withValues) {
+				//$a[$current->getLabel()] = $this->values[$current->getLabel()];
+                $a[$current->getLabel()] = $current->getData();
 			} else {
-				$a[] = $current->readNode();
+				$a[] = $current->getLabel();
 			}
 			$current = $current->next;
 		}
@@ -228,17 +199,18 @@ class linkedList {
 		return $a;
 	}
 
-	public function exportBackward($withContainer = false) {
+	public function exportBackward($withValues = false) {
 
 		$current = $this->lastNode;
 
 		$a = array();
 
 		while ($current != NULL) {
-			if ($withContainer) {
-				$a[$current->readNode()] = $this->container[$current->readNode()];
+			if ($withValues) {
+				//$a[$current->getLabel()] = $this->values[$current->getLabel()];
+                $a[$current->getLabel()] = $current->getData();
 			} else {
-				$a[] = $current->readNode();
+				$a[] = $current->getLabel();
 			}
 			$current = $current->previous;
 		}
@@ -249,5 +221,72 @@ class linkedList {
 	public function total() {
 		return $this->count;
 	}
-
+    
+    public function getNode($search) {
+        //$current = $this->index[$search];
+        //return $current;
+        return $this->index[$search];
+    }
+    
+    public function getNodeValue($search) {
+        //return $this->values[$search];
+        if($this->index[$search]) {
+            return $this->index[$search]->getData();
+        }
+        return false;
+    }
+    
+    public function getLastNode($value=false) {
+        if($value) {
+            //return $this->values[$this->lastNode->label];
+            return $this->lastNode->getData();
+        }
+        return $this->lastNode;
+    }
+    
+    public function getFirstNode($value=false) {
+        
+        if($value) {
+            //return $this->values[$this->firstNode->label];
+            return $this->firstNode->getData();
+        }
+        
+        return $this->firstNode;
+    }
+    
+    //methods to implemnet Iterator and Traversable:
+    
+    public function current () {
+        if(!$this->position) {
+            $this->position = $this->firstNode->getLabel();
+        }
+        return $this->index[$this->position];
+    }
+    
+    public function key () {
+        if(!$this->position) {
+            $this->position = $this->firstNode->getLabel();
+        }
+        return $this->position;
+    }
+    
+    public function next ( ) {
+        if(!$this->position) {
+            $this->position = $this->firstNode->getLabel();
+        }
+        
+        $return = $this->index[$this->position]->getNext();
+        
+        $this->position = $return->getLabel();
+        
+        return $r;
+    }
+    
+    public function rewind ( ) {
+        $this->position = $this->firstNode->getLabel();
+    }
+    
+    public function valid () {
+        return isset($this->index[$this->position]);
+    }
 }

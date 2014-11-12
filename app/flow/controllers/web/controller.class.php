@@ -8,9 +8,6 @@ class FrontController extends \flow\controller {
 
 		parent::__construct();
 
-		var_dump($this->request);
-
-		var_dump(\settings\registry::Load()->get());
 	}
 
 }

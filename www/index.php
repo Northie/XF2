@@ -1,6 +1,6 @@
 <?php
 
 include('../app/bootstrap.php');
+include('bootstrap.php');
 $req = new \flow\controllers\web\FrontController();
-
-var_dump(get_included_files());
+$req->Execute();

@@ -13,7 +13,7 @@ class FrontController extends \flow\controller {
 		$cliServerArgs = $_SERVER;
 
 		$this->request = new \flow\Request($cliServerArgs);
-		$this->response = new \flow\Ressponse;
+		$this->response = new \flow\Response;
 
 		$this->filterList = \libs\DoublyLinkedList\factory::Build();
 
@@ -100,6 +100,8 @@ class FrontController extends \flow\controller {
 		$endpoint = $_SERVER['argv'][$use];
 
 		$_SERVER['REQUEST_URI'] = "/v" . $version . "/" . $endpoint;
+		
+		$GLOBALS['_'.$method] = $_REQUEST;
 
 		getArgs($use + 1);
 	}
