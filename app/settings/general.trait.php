@@ -38,7 +38,7 @@ trait _general {
 			'DOMAIN'=>'local.admin.xf2',
 			'DOCUMENT_ROOT'=>$_SERVER['DOCUMENT_ROOT'],
 			'APP_PATH'=>$_SERVER['DOCUMENT_ROOT'] . '/../',
-			'WEB_PATH'=>'/admin/'
+			'WEB_PATH'=>'/'
 		];
 		$settings['REALMS']['CONTROL'] = [
 			'DOMAIN'=>'local.control.xf2',

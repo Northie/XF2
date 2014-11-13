@@ -9,6 +9,7 @@ class actionFilter {
 
 
 		var_dump($this->request);
+		var_dump(\settings\registry::Load()->get());
 
 		$this->FFW();
 	}

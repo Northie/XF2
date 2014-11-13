@@ -2,6 +2,11 @@
 
 namespace flow\controllers\api;
 
-class FrontController {
-	
+class FrontController extends \flow\controller {
+
+	public function __construct() {
+
+		parent::__construct();
+	}
+
 }

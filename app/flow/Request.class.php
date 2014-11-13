@@ -42,10 +42,13 @@ class Request {
 
 			if ($details['DOMAIN'] == $request['host'] && strpos($request['path'], $details['WEB_PATH']) === 0) {
 
-				$endpoint = preg_replace("/^" . $details['PATH'] . "/", "", $request['path']);
+				$endpoint = preg_replace("%^" . $details['WEB_PATH'] . "%", "/", $request['path']);
 
 				\settings\registry::Load()->set(['REQUEST', 'REALM'], $realm);
 				\settings\registry::Load()->set(['REQUEST', 'ENDPOINT'], $endpoint);
+
+				$this->REALM = $realm;
+				$this->ENDPOINT = $endpoint;
 
 				$realmSet = true;
 				break;
@@ -53,7 +56,7 @@ class Request {
 		}
 
 		if (!$realmSet) {
-			die('no realm set');
+			die('Could not determine a realm');
 		}
 
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
