@@ -5,9 +5,9 @@ namespace flow;
 class Request {
 
 	private $requestKey = '';
-    private $ajax = false;
-    private $https = false;
-    private $dynamic = [];
+	private $ajax = false;
+	private $https = false;
+	private $dynamic = [];
 
 	public function __construct($server = false) {
 
@@ -24,15 +24,15 @@ class Request {
 
 		$realms = \settings\general::Load()->getRealms(true);
 
-        $this->HTTP_SCHEME = 'http://';
-        
-        if($this->HTTPS == 'on') {
-            $this->HTTP_SCHEME = 'https://';
-            $this->setIsHTTPS();
-        }
-        
-                        
-        $url = $this->HTTP_SCHEME.$this->HTTP_HOST.$this->REQUEST_URI;
+		$this->HTTP_SCHEME = 'http://';
+
+		if ($this->HTTPS == 'on') {
+			$this->HTTP_SCHEME = 'https://';
+			$this->setIsHTTPS();
+		}
+
+
+		$url = $this->HTTP_SCHEME . $this->HTTP_HOST . $this->REQUEST_URI;
 
 		$request = parse_url($url);
 
@@ -53,7 +53,7 @@ class Request {
 		}
 
 		if (!$realmSet) {
-            die('no realm set');
+			die('no realm set');
 		}
 
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
@@ -61,19 +61,20 @@ class Request {
 		}
 	}
 
-    public function isHTTPS() {
-        return $this->ajax;
-    }
-    
-    public function setIsHTTPS($set=true) {
-        $this->https = $set;
-    }
-    
-    public function __get($key) {
-        return $this->dynamic[$key];
-    }
-    
-    public function __set($key,$val) {
-        $this->dynamic[$key] = $val;
-    }
+	public function isHTTPS() {
+		return $this->ajax;
+	}
+
+	public function setIsHTTPS($set = true) {
+		$this->https = $set;
+	}
+
+	public function __get($key) {
+		return $this->dynamic[$key];
+	}
+
+	public function __set($key, $val) {
+		$this->dynamic[$key] = $val;
+	}
+
 }
