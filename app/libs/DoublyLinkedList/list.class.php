@@ -19,12 +19,12 @@ class linkedList implements \Iterator { //which implements Traversable
 
 	/**
 	 *
-	 * @param string $key
+	 * @param $key
 	 * @param mixed $value
 	 * @return boolean
 	 * @desc checks to see if $key already exists in index and updates it if it is
 	 */
-	private function update(string $key, $value) {
+	private function update($key, $value) {
 		if ($this->index[$key]) {
 			$this->index[$key]->setData($value);
 			return true;
@@ -42,11 +42,11 @@ class linkedList implements \Iterator { //which implements Traversable
 
 	/**
 	 *
-	 * @param string $key
+	 * @param $key
 	 * @param mixed $value
 	 * @return type
 	 */
-	public function insertFirst(string $key, $value = false) {
+	public function insertFirst($key, $value = false) {
 
 		if ($this->update($key, $value)) {
 			//$this->move($key)->toBefore($this->firstNode->label);
@@ -73,21 +73,21 @@ class linkedList implements \Iterator { //which implements Traversable
 
 	/**
 	 *
-	 * @param string $key
+	 * @param $key
 	 * @param mixed $value
 	 * @desc alias of insertLast
 	 */
-	public function push(string $key, $value) {
+	public function push($key, $value) {
 		$this->insertLast($key, $value);
 	}
 
 	/**
 	 * @desc appends the node to the
-	 * @param string $key
+	 * @param $key
 	 * @param type $value
 	 * @return void
 	 */
-	public function insertLast(string $key, $value = false) {
+	public function insertLast($key, $value = false) {
 
 		//think about this - what should the behavior be? should this use $this->move($key)->toAfter($this->lastNode->label)?
 		if ($this->update($key, $value)) {
@@ -113,7 +113,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		$this->count++;
 	}
 
-	public function insertAfter(string $search, string $key, $value = false) {
+	public function insertAfter($search, $key, $value = false) {
 
 		//think about this - what should the behavior be?
 		if ($this->update($key, $value)) {
@@ -148,7 +148,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		return true;
 	}
 
-	public function insertBefore(string $search, string $key, $value = false) {
+	public function insertBefore($search, $key, $value = false) {
 
 		//think about this - what should the behavior be?
 		if ($this->update($key, $value)) {
@@ -218,7 +218,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		return $save;
 	}
 
-	public function deleteNode(string $search) {
+	public function deleteNode($search) {
 
 		$current = $this->index[$search];
 		$save = clone $current;
@@ -283,13 +283,13 @@ class linkedList implements \Iterator { //which implements Traversable
 		return $this->count;
 	}
 
-	public function getNode(string $search) {
+	public function getNode($search) {
 		//$current = $this->index[$search];
 		//return $current;
 		return $this->index[$search];
 	}
 
-	public function getNodeValue(string $search) {
+	public function getNodeValue($search) {
 		//return $this->values[$search];
 		if ($this->index[$search]) {
 			return $this->index[$search]->getData();
@@ -353,14 +353,14 @@ class linkedList implements \Iterator { //which implements Traversable
 
 	/**
 	 *
-	 * @param string $key
+	 * @param $key
 	 * @return \libs\DoublyLinkedList\linkedList
 	 *
 	 * $list->move('foo')->toBefore('bar');
 	 * $list->move('bar')->toAfter('baz');
 	 *
 	 */
-	public function move(string $key) {
+	public function move($key) {
 		//get node value and key - hold in temp
 		//delete node
 		if (isset($this->index[$key])) {
@@ -371,7 +371,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		return $this;
 	}
 
-	public function toBefore(string $key) {
+	public function toBefore($key) {
 
 		//check this is called by self?
 		//forward on to insertBefore
@@ -379,7 +379,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		$this->temp = [];
 	}
 
-	public function toAfter(string $key) {
+	public function toAfter($key) {
 
 		//check this is called by self?
 		//forward on to insertAfter

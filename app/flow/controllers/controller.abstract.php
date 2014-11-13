@@ -8,6 +8,7 @@ abstract class controller {
 	public $filters = ['test', 'action'];
 	public $request;
 	public $response;
+	protected $filterList;
 
 	public function __construct() {
 
