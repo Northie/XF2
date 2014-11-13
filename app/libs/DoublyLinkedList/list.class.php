@@ -24,8 +24,14 @@ class linkedList implements \Iterator { //which implements Traversable
 	public function insertFirst(string $key, $value = false) {
 		$newLink = new node($key);
 
+        //this needs adding everywhere
+        if($this->index[$key]) {
+            $this->index[$key]->setData($value);
+            return;
+        }
+        
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
+		//$this->values[$key] = $value;
         $newLink->setData($value);
 
 		if ($this->isEmpty()) {
@@ -48,7 +54,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		$newLink = new node($key);
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
+		//$this->values[$key] = $value;
         
         $newLink->setData($value);
 
@@ -76,7 +82,7 @@ class linkedList implements \Iterator { //which implements Traversable
         
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
+		//$this->values[$key] = $value;
 
 		if ($current == $this->lastNode) {
 			$newLink->next = NULL;
@@ -104,7 +110,7 @@ class linkedList implements \Iterator { //which implements Traversable
         $newLink->setData($value);
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
+		//$this->values[$key] = $value;
 
 		if ($current == $this->firstNode) {
 			$newLink->next = NULL;
@@ -124,6 +130,7 @@ class linkedList implements \Iterator { //which implements Traversable
 	public function deleteFirstNode() {
 
 		$temp = $this->firstNode;
+        $save = clone $temp;
 
 		unset($this->index[$this->firstNode->label]);
 
@@ -136,14 +143,13 @@ class linkedList implements \Iterator { //which implements Traversable
 		$this->firstNode = $this->firstNode->next;
 		$this->count--;
 
-
-
-		return $temp;
+		return $save;
 	}
 
 	public function deleteLastNode() {
 
 		$temp = $this->lastNode;
+        $save = clone $temp;
 
 		unset($this->index[$this->lastNode->label]);
 
@@ -155,12 +161,13 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		$this->lastNode = $this->lastNode->previous;
 		$this->count--;
-		return $temp;
+		return $save;
 	}
 
 	public function deleteNode($search) {
 
 		$current = $this->index[$search];
+        $save = clone $current;
 
 		if ($current == $this->firstNode) {
 			$this->firstNode = $current->next;
@@ -177,7 +184,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		unset($this->index[$search]);
 
 		$this->count--;
-		return $current;
+		return $save;
 	}
 
 	public function exportForward($withValues = false) {
