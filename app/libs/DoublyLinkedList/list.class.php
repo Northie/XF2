@@ -8,8 +8,8 @@ class linkedList implements \Iterator { //which implements Traversable
 	private $lastNode;
 	private $count;
 	private $index = [];
-	private $values = [];
-    private $position = '';
+	private $position = '';
+	private $temp = [];
 
 	function __construct() {
 		$this->firstNode = NULL;
@@ -17,16 +17,47 @@ class linkedList implements \Iterator { //which implements Traversable
 		$this->count = 0;
 	}
 
+	/**
+	 *
+	 * @param $key
+	 * @param mixed $value
+	 * @return boolean
+	 * @desc checks to see if $key already exists in index and updates it if it is
+	 */
+	private function update($key, $value) {
+		if ($this->index[$key]) {
+			$this->index[$key]->setData($value);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @desc is list empty? yes => true; no => false;
+	 * @return boolean
+	 */
 	public function isEmpty() {
 		return ($this->firstNode == NULL);
 	}
 
-	public function insertFirst(string $key, $value = false) {
+	/**
+	 *
+	 * @param $key
+	 * @param mixed $value
+	 * @return type
+	 */
+	public function insertFirst($key, $value = false) {
+
+		if ($this->update($key, $value)) {
+			//$this->move($key)->toBefore($this->firstNode->label);
+			return;
+		}
+
 		$newLink = new node($key);
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
-        $newLink->setData($value);
+		//$this->values[$key] = $value;
+		$newLink->setData($value);
 
 		if ($this->isEmpty()) {
 			$this->lastNode = $newLink;
@@ -36,21 +67,40 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		$newLink->next = $this->firstNode;
 		$this->firstNode = $newLink;
-        
+
 		$this->count++;
 	}
 
+	/**
+	 *
+	 * @param $key
+	 * @param mixed $value
+	 * @desc alias of insertLast
+	 */
 	public function push($key, $value) {
 		$this->insertLast($key, $value);
 	}
 
+	/**
+	 * @desc appends the node to the
+	 * @param $key
+	 * @param type $value
+	 * @return void
+	 */
 	public function insertLast($key, $value = false) {
+
+		//think about this - what should the behavior be? should this use $this->move($key)->toAfter($this->lastNode->label)?
+		if ($this->update($key, $value)) {
+			//$this->move($key)->toAfter($this->lastNode->label);
+			return;
+		}
+
 		$newLink = new node($key);
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
-        
-        $newLink->setData($value);
+		//$this->values[$key] = $value;
+
+		$newLink->setData($value);
 
 		if ($this->isEmpty()) {
 			$this->firstNode = $newLink;
@@ -65,18 +115,23 @@ class linkedList implements \Iterator { //which implements Traversable
 
 	public function insertAfter($search, $key, $value = false) {
 
-        $current = $this->index[$search];
+		//think about this - what should the behavior be?
+		if ($this->update($key, $value)) {
+			return;
+		}
 
-        if ($current == NULL) {
-            return false;
-        }
-        
+		$current = $this->index[$search];
+
+		if ($current == NULL) {
+			return false;
+		}
+
 		$newLink = new node($key);
-        $newLink->setData($value);
-        
+		$newLink->setData($value);
+
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
+		//$this->values[$key] = $value;
 
 		if ($current == $this->lastNode) {
 			$newLink->next = NULL;
@@ -94,17 +149,22 @@ class linkedList implements \Iterator { //which implements Traversable
 	}
 
 	public function insertBefore($search, $key, $value = false) {
-        
-        $current = $this->index[$search];
 
-        if ($current == NULL) {
-            return false;
-        }
+		//think about this - what should the behavior be?
+		if ($this->update($key, $value)) {
+			return;
+		}
+
+		$current = $this->index[$search];
+
+		if ($current == NULL) {
+			return false;
+		}
 		$newLink = new node($key);
-        $newLink->setData($value);
+		$newLink->setData($value);
 
 		$this->index[$key] = $newLink;
-		$this->values[$key] = $value;
+		//$this->values[$key] = $value;
 
 		if ($current == $this->firstNode) {
 			$newLink->next = NULL;
@@ -124,6 +184,7 @@ class linkedList implements \Iterator { //which implements Traversable
 	public function deleteFirstNode() {
 
 		$temp = $this->firstNode;
+		$save = clone $temp;
 
 		unset($this->index[$this->firstNode->label]);
 
@@ -136,14 +197,13 @@ class linkedList implements \Iterator { //which implements Traversable
 		$this->firstNode = $this->firstNode->next;
 		$this->count--;
 
-
-
-		return $temp;
+		return $save;
 	}
 
 	public function deleteLastNode() {
 
 		$temp = $this->lastNode;
+		$save = clone $temp;
 
 		unset($this->index[$this->lastNode->label]);
 
@@ -155,12 +215,13 @@ class linkedList implements \Iterator { //which implements Traversable
 
 		$this->lastNode = $this->lastNode->previous;
 		$this->count--;
-		return $temp;
+		return $save;
 	}
 
 	public function deleteNode($search) {
 
 		$current = $this->index[$search];
+		$save = clone $current;
 
 		if ($current == $this->firstNode) {
 			$this->firstNode = $current->next;
@@ -177,7 +238,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		unset($this->index[$search]);
 
 		$this->count--;
-		return $current;
+		return $save;
 	}
 
 	public function exportForward($withValues = false) {
@@ -189,7 +250,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		while ($current != NULL) {
 			if ($withValues) {
 				//$a[$current->getLabel()] = $this->values[$current->getLabel()];
-                $a[$current->getLabel()] = $current->getData();
+				$a[$current->getLabel()] = $current->getData();
 			} else {
 				$a[] = $current->getLabel();
 			}
@@ -208,7 +269,7 @@ class linkedList implements \Iterator { //which implements Traversable
 		while ($current != NULL) {
 			if ($withValues) {
 				//$a[$current->getLabel()] = $this->values[$current->getLabel()];
-                $a[$current->getLabel()] = $current->getData();
+				$a[$current->getLabel()] = $current->getData();
 			} else {
 				$a[] = $current->getLabel();
 			}
@@ -221,72 +282,109 @@ class linkedList implements \Iterator { //which implements Traversable
 	public function total() {
 		return $this->count;
 	}
-    
-    public function getNode($search) {
-        //$current = $this->index[$search];
-        //return $current;
-        return $this->index[$search];
-    }
-    
-    public function getNodeValue($search) {
-        //return $this->values[$search];
-        if($this->index[$search]) {
-            return $this->index[$search]->getData();
-        }
-        return false;
-    }
-    
-    public function getLastNode($value=false) {
-        if($value) {
-            //return $this->values[$this->lastNode->label];
-            return $this->lastNode->getData();
-        }
-        return $this->lastNode;
-    }
-    
-    public function getFirstNode($value=false) {
-        
-        if($value) {
-            //return $this->values[$this->firstNode->label];
-            return $this->firstNode->getData();
-        }
-        
-        return $this->firstNode;
-    }
-    
-    //methods to implemnet Iterator and Traversable:
-    
-    public function current () {
-        if(!$this->position) {
-            $this->position = $this->firstNode->getLabel();
-        }
-        return $this->index[$this->position];
-    }
-    
-    public function key () {
-        if(!$this->position) {
-            $this->position = $this->firstNode->getLabel();
-        }
-        return $this->position;
-    }
-    
-    public function next ( ) {
-        if(!$this->position) {
-            $this->position = $this->firstNode->getLabel();
-        }
-        
-        $return = $this->index[$this->position]->getNext();
-        
-        $this->position = $return->getLabel();
-        
-        return $r;
-    }
-    
-    public function rewind ( ) {
-        $this->position = $this->firstNode->getLabel();
-    }
-    
-    public function valid () {
-        return isset($this->index[$this->position]);
-    }
+
+	public function getNode($search) {
+		//$current = $this->index[$search];
+		//return $current;
+		return $this->index[$search];
+	}
+
+	public function getNodeValue($search) {
+		//return $this->values[$search];
+		if ($this->index[$search]) {
+			return $this->index[$search]->getData();
+		}
+		return false;
+	}
+
+	public function getLastNode($value = false) {
+		if ($value) {
+			//return $this->values[$this->lastNode->label];
+			return $this->lastNode->getData();
+		}
+		return $this->lastNode;
+	}
+
+	public function getFirstNode($value = false) {
+
+		if ($value) {
+			//return $this->values[$this->firstNode->label];
+			return $this->firstNode->getData();
+		}
+
+		return $this->firstNode;
+	}
+
+	//methods to implemnet Iterator and Traversable:
+
+	public function current() {
+		if (!$this->position) {
+			$this->position = $this->firstNode->getLabel();
+		}
+		return $this->index[$this->position];
+	}
+
+	public function key() {
+		if (!$this->position) {
+			$this->position = $this->firstNode->getLabel();
+		}
+		return $this->position;
+	}
+
+	public function next() {
+		if (!$this->position) {
+			$this->position = $this->firstNode->getLabel();
+		}
+
+		$return = $this->index[$this->position]->getNext();
+
+		$this->position = $return->getLabel();
+
+		return $r;
+	}
+
+	public function rewind() {
+		$this->position = $this->firstNode->getLabel();
+	}
+
+	public function valid() {
+		return isset($this->index[$this->position]);
+	}
+
+	/**
+	 *
+	 * @param $key
+	 * @return \libs\DoublyLinkedList\linkedList
+	 *
+	 * $list->move('foo')->toBefore('bar');
+	 * $list->move('bar')->toAfter('baz');
+	 *
+	 */
+	public function move($key) {
+		//get node value and key - hold in temp
+		//delete node
+		if (isset($this->index[$key])) {
+			$this->temp = ['key'=>$key, 'value'=>$this->deleteNode($key)->getData()];
+		} else {
+			//error
+		}
+		return $this;
+	}
+
+	public function toBefore($key) {
+
+		//check this is called by self?
+		//forward on to insertBefore
+		$this->insertBefore($key, $this->temp['key'], $this->temp['value']);
+		$this->temp = [];
+	}
+
+	public function toAfter($key) {
+
+		//check this is called by self?
+		//forward on to insertAfter
+		$this->insertAfter($key, $this->temp['key'], $this->temp['value']);
+		$this->temp = [];
+	}
+
 }
