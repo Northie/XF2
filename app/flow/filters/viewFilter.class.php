@@ -1,7 +1,7 @@
 <?php
 namespace flow\filters;
 
-class testFilter {
+class viewFilter {
     use filter;
     
     public function in() {
