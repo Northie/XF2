@@ -11,11 +11,13 @@ abstract class controller {
 	protected $filterList;
 
 	public function __construct() {
-
-
-
 		$this->request = new \flow\Request;
 		$this->response = new \flow\Response;
+	}
+
+	public final function Init() {
+
+		$this->filters = $this->request->getEndpoint()->getNamedFilterList();
 
 		$this->filterList = \libs\DoublyLinkedList\factory::Build();
 
