@@ -7,15 +7,15 @@ class actionFilter {
 
 	public function in() {
 
-        $_SESSION['filters'][] = __METHOD__;
-        
-		var_dump($this->request);
-		var_dump(\settings\registry::Load()->get());
+		$this->request->getEndpoint()->Execute();
 
 		$this->FFW();
 	}
 
 	public function out() {
+
+		$this->response->setData($this->request->getEndpoint()->getData());
+
 		$this->RWD();
 	}
 
