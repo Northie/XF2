@@ -6,11 +6,14 @@ class index {
 	use \endpoints\endpoint;
 
 	public function __construct($request, $response, $filters) {
-        $filters->insertBefore('action','view', new \flow\filters\viewFilter($request,$response,$filters));
+		$this->filters = $filters;
+		$filters = $this->filterInsertBefore('view', 'action');
 	}
-    
-    public function Execute() {
-        var_dump($_SESSION);
-    }
+
+	public function Execute() {
+		$this->data = ['dummy'=>'data'];
+
+		//dive into reading from CMS
+	}
 
 }

@@ -4,6 +4,7 @@ $t1 = microtime(true);
 include('../app/bootstrap.php');
 include('bootstrap.php');
 $req = new \flow\controllers\web\FrontController();
+$req->Init();
 $req->Execute();
 $t2 = microtime(true);
 $t = $t2 - $t1;
