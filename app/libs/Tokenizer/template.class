@@ -1,6 +1,81 @@
 <?php
+
 namespace tokenizer;
 
 class template extends tokenizer {
-    
+	protected $lexicals = [
+		'X_THIS'=>
+		[
+			'regex'=>'/(this)/',
+		],
+		'X_BLOCK_START'=>
+		[
+			'regex'=>'/(\>\>)/',
+			'is_opener'=>true,
+			'closed_by'=>'X_BLOCK_END'
+		],
+		'X_BLOCK_END'=>
+		[
+			'regex'=>'/(\<\<)/',
+			'is_closer'=>true,
+			'opened_by'=>'X_BLOCK_START'
+		],
+		'X_OO'=>
+		[
+			'regex'=>'/(\.)/',
+		],
+		'X_SECTION_START'=>
+		[
+			'regex'=>'/(\{)/',
+			'is_opener'=>true,
+			'closed_by'=>'X_SECTION_END'
+		],
+		'X_SECTION_END'=>
+		[
+			'regex'=>'/(\})/',
+			'is_closer'=>true,
+			'opened_by'=>'X_SECTION_START'
+		],
+		'X_GROUP_START'=>
+		[
+			'regex'=>'/(\()/',
+			'is_opener'=>true,
+			'closed_by'=>'X_GROUP_END'
+		],
+		'X_GROUP_END'=>
+		[
+			'regex'=>'/(\))/',
+			'is_closer'=>true,
+			'opened_by'=>X_GROUP_START
+		],
+		'X_AS'=>
+		[
+			'regex'=>'/(\sas\s)/',
+		],
+		'X_FUNCTION_NAME'=>
+		[
+			'regex'=>'/(\$)/',
+		],
+		'X_STRING_CONTAINER'=>
+		[
+			'regex'=>'/(\")/',
+			'is_paired'=>true
+		],
+		'X_STRING_CONCAT'=>
+		[
+			'regex'=>'/(\+)/',
+			'is_paired'=>true
+		],
+	];
+
+	public function __construct($input=false) {
+		if($input) {
+			$this->setInput($input);
+		}
+		$this->init();
+	}
+
+	public function api() {
+
+	}
 }
