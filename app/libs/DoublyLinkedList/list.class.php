@@ -95,7 +95,19 @@ class linkedList implements \Iterator { //which implements Traversable
 			return;
 		}
 
+
 		$newLink = new node($key);
+
+		if ($value instanceof \libs\DoublyLinkedList\linkedList) {
+
+
+			if ($value->getFirstNode() instanceof \libs\DoublyLinkedList\node) {
+				$value->getFirstNode()->setPrevious($newLink);
+			}
+			if ($value->getLastNode() instanceof \libs\DoublyLinkedList\node) {
+				$value->getFirstNode()->setPrevious($newLink);
+			}
+		}
 
 		$this->index[$key] = $newLink;
 		//$this->values[$key] = $value;
