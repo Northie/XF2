@@ -1,0 +1,6 @@
+<?php
+namespace tokenizer;
+
+class template extends tokenizer {
+    
+}
