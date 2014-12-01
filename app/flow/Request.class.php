@@ -12,6 +12,10 @@ class Request {
 
 	public function __construct($server = false) {
 
+        if(!\Plugins\Plugins::Load()->DoPlugins('onBeforeRequestConstruct',$this)) {
+            return false;
+        }
+        
 		if (!$server) {
 			//if no $_SERVER then throw exception? should come from cli.php?
 			$server = $_SERVER;
@@ -69,6 +73,8 @@ class Request {
 		if (count($ext) > 1) {
 			$this->ext = array_pop($ext);
 		}
+        
+        \Plugins\Plugins::Load()->DoPlugins('onAfterRequestConstruct',$this);
 	}
 
 	public function isHTTPS() {
