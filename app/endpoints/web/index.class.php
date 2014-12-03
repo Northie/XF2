@@ -13,6 +13,8 @@ class index {
 	public function Execute() {
 		$this->data = ['dummy'=>'data'];
 
+		$this->data['filters'] = $this->getAppliedFilters();
+		
 		//dive into reading from CMS
 	}
 
