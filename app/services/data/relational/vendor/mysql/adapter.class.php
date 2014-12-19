@@ -7,6 +7,10 @@ class adapter extends \services\data\adapter {
 	public function __construct($db) {
 		$this->db = $db;
 	}
+	
+	public function setModelName($model) {
+		$this->model = $model;
+	}
 
 	public function create() {
 

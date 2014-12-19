@@ -27,14 +27,14 @@ class XF_PDO {
 	 */
 	public function __construct($options) {
 
-
 		$this->db_type = $options['type'];
 		$this->db_host = $options['host'];
-		$this->db_name = $options['db'];
+		$this->db_name = $options['name'];
 		$this->db_user = $options['user'];
 		$this->db_pass = $options['pass'];
 		$this->db_char = $options['char'] ? $options['char'] : $this->db_char;
 		$this->db_conf = $options['conf'] ? $options['conf'] : $this->db_conf;
+		
 	}
 
 	/**
@@ -52,7 +52,7 @@ class XF_PDO {
 		} catch (\PDOException $e) {
 			echo $e->getMessage();
 			$this->conn = false;
-			die();
+			die(" in ".__FILE__."=>".__LINE__);
 		}
 
 		return $this->conn;

@@ -5,7 +5,7 @@ namespace models\data;
 trait relational_tools {
 
 	public function describe() {
-		return $this->fields;
+		return [__CLASS__=>$this->fields];
 	}
 
 	public function getResourceTypes() {

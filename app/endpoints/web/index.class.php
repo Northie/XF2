@@ -13,6 +13,12 @@ class index {
 	public function Execute() {
 		$this->data = ['dummy'=>'data'];
 
+		
+		
+		$user = \models\data\factory::build('user');
+		
+		var_dump($user);
+		
 		$this->data['filters'] = $this->getAppliedFilters();
 		
 		//dive into reading from CMS
