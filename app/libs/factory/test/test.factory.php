@@ -1,11 +1,11 @@
 <?php
 namespace libs\factory\test;
 
-class TestFactory {
+class TestFactory extends \libs\factory\factory {
 	
-	public function __construct($caller) {
+	public function __construct($controller) {
 		
-		$this->caller = $caller;
+		$this->controller = $controller;
 		
 		$this->steps = array(
 		    'SaveData',
@@ -19,17 +19,20 @@ class TestFactory {
 		$this->processList = \libs\DoublyLinkedList\factory::Build();
 		
 		foreach ($this->steps as $p) {
-			$_f = __NAMESPACE__.$p;
-			$step = new $_f($this->processList, $this, $this->caller);
-			$this->filterList->push($f, $filter);
-			$filter->init();
+			$_s = __NAMESPACE__.$p;
+			$step = new $_s($this->processList, $this, $this->controller);
+			$this->filterList->push($p, $step);
+			$step->init();
 		}
 		
 	}
-
-	public function Build() {
-		$start = $this->processList->getFirstNode(true);
-		$start->build();
+	
+	public function success($step=false) {
+		//
+	}
+	
+	public function failed($step=false) {
+		
 	}
 
 }

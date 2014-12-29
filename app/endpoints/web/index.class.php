@@ -21,6 +21,9 @@ class index {
 		
 		$this->data['filters'] = $this->getAppliedFilters();
 		
+		$test = new \libs\factory\test\TestFactory($this);
+		$test->Build();
+		
 		//dive into reading from CMS
 	}
 

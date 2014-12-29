@@ -11,7 +11,7 @@ trait flow {
 
 	public function __construct($list, $parent, $controller) {
 		$this->list = $list;
-		$this->parent = $parent;
+		$this->parent = $parent;	//top level factory
 		$this->controller = $controller;
 	}
 
@@ -49,6 +49,20 @@ trait flow {
 		if ($filter) {
 			$filter->unbuild();
 		}
+	}
+	
+	public function success() {
+		if(method_exists($this->parent, 'success')) {
+			$this->parent->success($this->currentNode->label);
+		}
+		$this->FFW();
+	}
+	
+	public function failed() {
+		if(method_exists($this->parent, 'failed')) {
+			$this->parent->failed($this->currentNode->label);
+		}
+		$this->RWD();		
 	}
 
 }
