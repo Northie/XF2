@@ -17,6 +17,7 @@ trait filter {
 
 	public function init() {
 		$this->currentNode = $this->list->getLastNode();
+		$this->request->getEndpoint()->filteredBy($this);
 	}
 
 	private function getNext() {

@@ -8,7 +8,7 @@ class factory {
 
 		$settings = \settings\database::Load()->get($label);
 
-		$cls = "vendor/" . $settings['type'] . "/adapter";
+		$cls = "\\services\\data\\relational\\vendor\\" . $settings['type'] . "\adapter";
 
 		$o = new $cls(XF_DBA::Load($label));
 

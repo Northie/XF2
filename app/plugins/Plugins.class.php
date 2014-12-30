@@ -49,6 +49,8 @@ class Plugins {
 
 	public function DoPlugins($when, $obj, $options = false) {
 
+        var_dump($when);
+        
 		if (!self::$use_plugins) {
 			return true;
 		}
