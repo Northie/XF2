@@ -12,6 +12,8 @@ class index {
 
 	public function Execute() {
 		$this->data = ['dummy'=>'data'];
+        
+        return;
 
 		
 		

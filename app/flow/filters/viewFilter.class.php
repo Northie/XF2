@@ -13,7 +13,7 @@ class viewFilter {
 	public function out() {
 		$data = $this->response->getData();
 
-		var_dump($data);
+		\utils\debug::printNice($data);
 
 		if (is_null($this->request->ext)) {
 			if ($this->request->isAjax()) {
@@ -25,7 +25,7 @@ class viewFilter {
 			$renderer = strtoupper($this->request->ext);
 		}
 
-		var_dump($renderer);
+		\utils\debug::printNice($renderer);
 
 		$this->RWD();
 	}
