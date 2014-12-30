@@ -23,6 +23,8 @@ class viewFilter {
 			$renderer = strtoupper($this->request->ext);
 		}
 
+		var_dump($renderer);
+		var_dump($data);
 
 		$this->RWD();
 	}

@@ -15,9 +15,9 @@ class index {
 
 		$user = \models\data\factory::build('user');
 
-		$this->data = ['user'=>$user->describe()];
+		$this->data['user'] = $user->describe();
 
-		//$this->data['filters'] = $this->getAppliedFilters();
+		$this->data['filters'] = $this->getAppliedFilters();
 
 		$test = new \libs\factory\test\TestFactory($this);
 		$test->Build();
