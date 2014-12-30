@@ -2,12 +2,16 @@
 
 namespace libs\factory\test;
 
-class SaveData extends \libs\factory\processStep {
+class Directory extends \libs\factory\processStep {
 	
 	use \libs\factory\flow;
 	
 	public function Build() {
 		try {
+
+			$nestedTest = new \libs\factory\nestedTest\NestedTestFactory($this->controller);
+			$nestedTest->Build();
+			
 			echo "Building ".__CLASS__."<br />\n";
 		} catch (\libs\factory\BuildException $e) {
 			return $this->failed();

@@ -12,8 +12,8 @@ trait _database {
 		$settings['default']['type'] = 'mysql';
 		$settings['default']['host'] = 'localhost';
 		$settings['default']['user'] = 'chris';
-		$settings['default']['pass'] = 'rutledge';
-		$settings['default']['name'] = 'app';
+		$settings['default']['pass'] = 'XQnSPRDs446T9Kfb';
+		$settings['default']['name'] = 'testapp';
 
 		$settings['write'] = [];
 

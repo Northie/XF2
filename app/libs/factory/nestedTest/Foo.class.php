@@ -1,8 +1,8 @@
 <?php
 
-namespace libs\factory\test;
+namespace libs\factory\nestedTest;
 
-class SaveData extends \libs\factory\processStep {
+class Foo extends \libs\factory\processStep {
 	
 	use \libs\factory\flow;
 	

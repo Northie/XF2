@@ -4,8 +4,12 @@ namespace models\data;
 
 trait relational_tools {
 
+	protected $_class = '';
+	
 	public function describe() {
-		return [__CLASS__=>$this->fields];
+		$this->_class = trim(str_replace(__NAMESPACE__,"", __CLASS__),"\\");
+		
+		return [$this->_class=>$this->fields];
 	}
 
 	public function getResourceTypes() {

@@ -2,7 +2,7 @@
 
 namespace libs\factory\test;
 
-class SaveData extends \libs\factory\processStep {
+class SaveTheme extends \libs\factory\processStep {
 	
 	use \libs\factory\flow;
 	

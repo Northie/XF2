@@ -8,6 +8,7 @@ abstract class factory {
 	protected $queue = false;
 	
 	public function Build() {
+		ignore_user_abort(true);
 		$start = $this->processList->getFirstNode(true);
 		$start->start();
 	}

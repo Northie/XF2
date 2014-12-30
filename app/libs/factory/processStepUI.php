@@ -1,7 +1,7 @@
 <?php
 namespace libs\factory;
 
-abstract class processStepUI extends \libs\factory\processStep implements iProcessStepUI {
+abstract class processStepUI extends processStep implements iProcessStepUI {
 	
 	protected $form = false;
 
@@ -11,6 +11,8 @@ abstract class processStepUI extends \libs\factory\processStep implements iProce
 		if(!$this->form) {
 			throw new BuildException('User Interface/Input Step form not set');
 		}
+		
+		$this->form->Execute();
 
 		if($this->form->isValid()) {
 			$this->Build();

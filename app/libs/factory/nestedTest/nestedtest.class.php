@@ -1,19 +1,15 @@
 <?php
-namespace libs\factory\test;
+namespace libs\factory\nestedTest;
 
-class TestFactory extends \libs\factory\factory {
+class NestedTestFactory extends \libs\factory\factory {
 	
 	public function __construct($controller) {
 		
 		$this->controller = $controller;
 		
 		$this->steps = array(
-		    'SaveData',
-		    'Directory',
-		    'Backup',
-		    'MakeFiles',
-		    'Compile',
-		    'SaveTheme',
+		    'Foo',
+		    'Bar'
 		);
 		
 		$this->processList = \libs\DoublyLinkedList\factory::Build();

@@ -8,6 +8,7 @@ trait flow {
 	private $list;
 	private $parent;
 	private $controller;
+	public $options = [];
 
 	public function __construct($list, $parent, $controller) {
 		$this->list = $list;
@@ -35,12 +36,16 @@ trait flow {
 	}
 
 	public function FFW() {
-		$filter = $this->getNext();
-
-		if ($filter) {
-			$filter->build();
+		
+		if(connection_aborted()) {
+			$filter = $this->unbuild();
 		} else {
-			$this->unbuild();
+		
+			$filter = $this->getNext();
+
+			if ($filter) {
+				$filter->build();
+			}
 		}
 	}
 
@@ -55,6 +60,7 @@ trait flow {
 		if(method_exists($this->parent, 'success')) {
 			$this->parent->success($this->currentNode->label);
 		}
+		
 		$this->FFW();
 	}
 	
@@ -62,7 +68,12 @@ trait flow {
 		if(method_exists($this->parent, 'failed')) {
 			$this->parent->failed($this->currentNode->label);
 		}
-		$this->RWD();		
+		
+		$this->Unbuild();		
+	}
+	
+	public function setOptions($options) {
+		$this->options = $options;
 	}
 
 }

@@ -17,7 +17,7 @@ class index {
 		
 		$user = \models\data\factory::build('user');
 		
-		var_dump($user);
+		$this->data = ['user'=>$user->describe()];
 		
 		$this->data['filters'] = $this->getAppliedFilters();
 		
@@ -27,4 +27,8 @@ class index {
 		//dive into reading from CMS
 	}
 
+	public function moniterProgress($step,$data=false) {
+		$this->data['process'][$step] = $data;
+	}
+	
 }
