@@ -16,6 +16,7 @@ trait filter {
 	}
 
 	public function init() {
+		//as this is called just after the filter has been stacked, the list object has this object as the last node
 		$this->currentNode = $this->list->getLastNode();
 		$this->request->getEndpoint()->filteredBy($this);
 	}

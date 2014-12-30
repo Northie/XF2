@@ -12,25 +12,17 @@ class index {
 
 	public function Execute() {
 		$this->data = ['dummy'=>'data'];
-        
-        return;
 
-		
-		
 		$user = \models\data\factory::build('user');
-		
-		$this->data = ['user'=>$user->describe()];
-		
+
+		$this->data['user'] = $user->describe();
+
 		$this->data['filters'] = $this->getAppliedFilters();
-		
+
 		$test = new \libs\factory\test\TestFactory($this);
 		$test->Build();
-		
+
 		//dive into reading from CMS
 	}
 
-	public function moniterProgress($step,$data=false) {
-		$this->data['process'][$step] = $data;
-	}
-	
 }
