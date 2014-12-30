@@ -3,49 +3,46 @@
 namespace flow;
 
 class Response {
-    
-    use \Plugins\helper;
+	use \Plugins\helper;
 
 	public function __construct() {
-        
-        if(!$this->before('ResponseConstruct', $this)) {
-            return false;
-        }
-        
-        \Plugins\Plugins::Load()->DoPlugins('onAfterResponseConstruct',$this);
+
+		if (!$this->before('ResponseConstruct', $this)) {
+			return false;
+		}
+		$this->after('ResponseConstruct', $this);
 	}
 
 	public function setData($data) {
-        if(!\Plugins\Plugins::Load()->DoPlugins('onBeforeResponseSetData',$this)) {
-            return false;
-        }
+		if (!\Plugins\Plugins::Load()->DoPlugins('onBeforeResponseSetData', $this)) {
+			return false;
+		}
 		$this->data = $data;
-        
-        \Plugins\Plugins::Load()->DoPlugins('onAfterResponseSetData',$this);
+		$this->after('ResponseSetData', $this);
 	}
 
 	public function getData() {
-        if(!\Plugins\Plugins::Load()->DoPlugins('onBeforeResponseGetData',$this)) {
-            return false;
-        }
+		if (!$this->before('ResponseGetData', $this)) {
+			return false;
+		}
 		return $this->data;
 	}
 
 	public function getResponseFormat() {
-        if(!\Plugins\Plugins::Load()->DoPlugins('onBeforeResponseGetResponseFormat',$this)) {
-            return false;
-        }
+		if (!$this->before('ResponseGetResponseFormat', $this)) {
+			return false;
+		}
 		return $this->format;
 	}
 
 	public function setResponseFormat($format) {
-        if(!\Plugins\Plugins::Load()->DoPlugins('onBeforeResponseSetResponseFormat',$this)) {
-            return false;
-        }
-        
+		if (!$this->before('ResponseSetResponseFormat', $this)) {
+			return false;
+		}
+
 		$this->format = $format;
-        
-        \Plugins\Plugins::Load()->DoPlugins('onAfterResponseSetResponseFormat',$this);
+
+		$this->after('ResponseSetResponseFormat', $this);
 	}
 
 }

@@ -12,7 +12,7 @@ trait flow {
 
 	public function __construct($list, $parent, $controller) {
 		$this->list = $list;
-		$this->parent = $parent;	//top level factory
+		$this->parent = $parent; //top level factory
 		$this->controller = $controller;
 	}
 
@@ -36,11 +36,11 @@ trait flow {
 	}
 
 	public function FFW() {
-		
-		if(connection_aborted()) {
+
+		if (connection_aborted()) {
 			$filter = $this->unbuild();
 		} else {
-		
+
 			$filter = $this->getNext();
 
 			if ($filter) {
@@ -55,23 +55,23 @@ trait flow {
 			$filter->unbuild();
 		}
 	}
-	
+
 	public function success() {
-		if(method_exists($this->parent, 'success')) {
+		if (method_exists($this->parent, 'success')) {
 			$this->parent->success($this->currentNode->label);
 		}
-		
+
 		$this->FFW();
 	}
-	
+
 	public function failed() {
-		if(method_exists($this->parent, 'failed')) {
+		if (method_exists($this->parent, 'failed')) {
 			$this->parent->failed($this->currentNode->label);
 		}
-		
-		$this->Unbuild();		
+
+		$this->Unbuild();
 	}
-	
+
 	public function setOptions($options) {
 		$this->options = $options;
 	}

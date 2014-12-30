@@ -13,8 +13,6 @@ class viewFilter {
 	public function out() {
 		$data = $this->response->getData();
 
-		\utils\debug::printNice($data);
-
 		if (is_null($this->request->ext)) {
 			if ($this->request->isAjax()) {
 				$renderer = 'JSON';
@@ -25,7 +23,6 @@ class viewFilter {
 			$renderer = strtoupper($this->request->ext);
 		}
 
-		\utils\debug::printNice($renderer);
 
 		$this->RWD();
 	}
