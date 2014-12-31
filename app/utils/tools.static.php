@@ -194,4 +194,8 @@ class Tools {
 		return $return;
 	}
 
+	public static function UUID() {
+		return sha1(microtime(true) . uniqid() . mt_rand(0, mt_getrandmax()));
+	}
+
 }

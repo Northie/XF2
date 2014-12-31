@@ -8,15 +8,22 @@ abstract class factory {
 	protected $queue = false;
 	private $notifications = [];
 	private $currentNotification = false;
+	protected $reference = false;
 
 	public function Build() {
 		ignore_user_abort(true);
+		$this->reference = \utils\Tools::UUID();
 		$start = $this->processList->getFirstNode(true);
 		$start->start();
 	}
 
 	public function Defer() {
 		$this->deferred = true;
+		$this->reference = \utils\Tools::UUID();
+		$steps = $this->processList->exportForward();
+
+		var_dump($steps);
+		//so far so good
 		//get list of steps
 		//get queue
 		//get queue reference
@@ -46,6 +53,9 @@ abstract class factory {
 
 	public function notify($notification) {
 		$this->notifications[] = $this->currentNotification = $notification;
+
+		$session = new \utils\XSession('PROCESSES');
+		$session->set($this->reference, [__CLASS__=>$this->notifications]);
 	}
 
 	public function getNotifications() {
@@ -54,6 +64,10 @@ abstract class factory {
 
 	public function getCurrentNotification() {
 		return $this->currentNotification;
+	}
+
+	public function getReference() {
+		return $this->reference;
 	}
 
 }
