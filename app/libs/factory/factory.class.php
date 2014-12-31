@@ -53,9 +53,11 @@ abstract class factory {
 
 	public function notify($notification) {
 		$this->notifications[] = $this->currentNotification = $notification;
+		
+		$label = get_class($this->processList->getFirstNode(true)->getParent());
 
 		$session = new \utils\XSession('PROCESSES');
-		$session->set($this->reference, [__CLASS__=>$this->notifications]);
+		$session->set($this->reference, [$label=>$this->notifications]);
 	}
 
 	public function getNotifications() {

@@ -19,8 +19,8 @@ class index {
 		//$this->data['filters'] = $this->getAppliedFilters();
 
 		$test = new \libs\factory\test\TestFactory($this);
-		//$test->Build();
-		$test->Defer();
+		$test->Build();
+		//$test->Defer();
 
 		//$this->data['process']['notifications'] = $test->getNotifications();
 		$this->data['process'] = $test->getReference();
