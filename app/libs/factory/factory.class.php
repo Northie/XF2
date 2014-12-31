@@ -3,10 +3,12 @@
 namespace libs\factory;
 
 abstract class factory {
-	
+
 	protected $deferred = false;
 	protected $queue = false;
-	
+	private $notifications = [];
+	private $currentNotification = false;
+
 	public function Build() {
 		ignore_user_abort(true);
 		$start = $this->processList->getFirstNode(true);
@@ -21,26 +23,37 @@ abstract class factory {
 		//queue items with reference to session and queue ref
 		//return reference
 	}
-	
+
 	public function getFeedback($reference) {
-		//use reference and queue to get 
+		//use reference and queue to get
 	}
-	
+
 	public function isDeferred() {
 		return $this->deferred;
 	}
-	
-	
-	public function success($step=false) {
-		if($this->isDeferred()) {
-			$this->queue->log(get_class($step).' Complete');
+
+	public function success($step = false) {
+		if ($this->isDeferred()) {
+			$this->queue->log(get_class($step) . ' Complete');
 		}
 	}
-	
-	public function failed($step=false) {
-		if($this->isDeferred()) {
-			$this->queue->log(get_class($step).' Failed');
-		}		
+
+	public function failed($step = false) {
+		if ($this->isDeferred()) {
+			$this->queue->log(get_class($step) . ' Failed');
+		}
 	}
-	
+
+	public function notify($notification) {
+		$this->notifications[] = $this->currentNotification = $notification;
+	}
+
+	public function getNotifications() {
+		return $this->notifications;
+	}
+
+	public function getCurrentNotification() {
+		return $this->currentNotification;
+	}
+
 }

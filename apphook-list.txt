@@ -1,13 +1,5 @@
-onAfterRequestConstruct
-onAfterResponseConstruct
-onAfterResponseSetData
-onAfterResponseSetResponseFormat
 onAfterRestCreate
 onAfterRestDestroy
 onAfterRestRead
 onAfterRestUpdate
-onBeforeRequestConstruct
-onBeforeResponseGetData
-onBeforeResponseGetResponseFormat
 onBeforeResponseSetData
-onBeforeResponseSetResponseFormat

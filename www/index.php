@@ -3,6 +3,7 @@
 $t1 = microtime(true);
 include('../app/bootstrap.php');
 include('bootstrap.php');
+\settings\registry::Load()->set(['VIEW_PATH', 'WEB'], $_SERVER['DOCUMENT_ROOT'] . "/views/");
 $req = new \flow\controllers\web\FrontController();
 $req->Init();
 $req->Execute();

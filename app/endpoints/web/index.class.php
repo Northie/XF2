@@ -15,9 +15,8 @@ class index {
 
 		$user = \models\data\factory::build('user');
 
-		$this->data['user'] = $user->describe();
-
-		$this->data['filters'] = $this->getAppliedFilters();
+		$this->data['user']['model'] = $user->describe()['user']; //since when has this syntax been allowed?
+		//$this->data['filters'] = $this->getAppliedFilters();
 
 		$test = new \libs\factory\test\TestFactory($this);
 		$test->Build();
