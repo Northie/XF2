@@ -6,7 +6,7 @@ class index {
 	use \endpoints\endpoint;
 	
 	public function __construct($request, $response, $filters) {
-		$this->filters = $filters;
+		$this->Init($request, $response, $filters);
 	}
 
 	public function Execute() {
@@ -14,6 +14,16 @@ class index {
 		
 		$user = \models\data\factory::build('user');
 		
-		$user->getById(1);
+		//$this->data['user'] = $user->getById(1);
+		$this->data['user_meta'] = $user->describe();
+		
+		$user->map([
+			'name'=>'Chris',
+			'email'=>'a@b.com',
+			'password'=>'password'
+		])->save();
+		
+		$this->data['user'] = $user->get();
+		
 	}
 }

@@ -5,9 +5,8 @@ namespace models\data;
 trait relational_tools {
 	
 	public function describe() {
-		$this->_class = trim(str_replace(__NAMESPACE__,"", __CLASS__),"\\");
-		
-		return [$this->_class=>$this->fields];
+		$_class = trim(str_replace(__NAMESPACE__,"", __CLASS__),"\\");
+		return [$_class=>$this->fields];
 	}
 
 	public function getResourceTypes() {
@@ -15,9 +14,10 @@ trait relational_tools {
 	}
 
 	public function map($data) {
-		foreach ($this->fields as $key=> $val) {
+		foreach ($this->fields as $i=> $key) {
 			$this->data[$key] = $data[$key];
 		}
+		return $this;
 	}
 
 	public function get() {
@@ -26,6 +26,7 @@ trait relational_tools {
 
 	public function getById($id) {
 		$this->map($this->db->read(['id'=>$id]));
+		return $this->get();
 	}
 
 	public function __get($field) {
@@ -45,7 +46,7 @@ trait relational_tools {
 			return true;
 		}
 
-		throw new RelationalExeption('Attempt to set non-existant field');
+		throw new RelationalExeption("Attempt to set non-existant field, $field");
 	}
 
 	public function __call($name, $args = false) {
@@ -88,6 +89,14 @@ trait relational_tools {
 			}
 
 			return false;
+		}
+	}
+	
+	public function save() {
+		if(isset($this->id)) {
+			$this->db->update($this->get());
+		} else {
+			$this->db->create($this->get());
 		}
 	}
 

@@ -11,7 +11,7 @@ class user extends relational {
 	
 	public function __construct($data=false,$label=false) {
 		
-		$this->class = trim(str_replace(__NAMESPACE__, "", __CLASS__),"\\");
+		$this->setName(trim(str_replace(__NAMESPACE__, "", __CLASS__),"\\"));
 		
 		if($label) {
 			parent::__construct($label);

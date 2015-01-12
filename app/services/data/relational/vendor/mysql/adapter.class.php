@@ -3,6 +3,10 @@
 namespace services\data\relational\vendor\mysql;
 
 class adapter extends \services\data\adapter {
+	
+	const QUERY_MODE_AND = 1;
+	const QUERY_MODE_OR = 2;
+	const QUERY_MODE_LIKE = 4;
 
 	public function __construct($db) {
 		$this->db = $db;
@@ -12,16 +16,56 @@ class adapter extends \services\data\adapter {
 		$this->model = $model;
 	}
 
-	public function create() {
+	public function integrate($data) {
 
+		foreach($this->model->describe()[$this->model->getName()] as $i => $key) {
+			if(isset($data[$key])) {
+				$this->data[$key] = $data[$key];
+			}
+		}
+	}
+	
+	public function create($data) {
+		var_dump(['here'=>__METHOD__,'data'=>$data]);
 	}
 
-	public function read() {
-		var_dump($this->model);
+	public function read($where=false,$mode=adapter::QUERY_MODE_AND) {
+		if(!$where) {
+			$where = [];
+		}
+		
+		$this->integrate($where);
+		
+		$sql_where = $args = [];
+		
+		foreach($this->data as $field => $value) {
+			$sql_where[] = "`".$field."` = :".$field;
+			if($mode & self::QUERY_MODE_LIKE) {
+				$value = "LIKE '%".$value."%";
+			} 
+			$args[$field] = $value;
+		}
+		
+		if($mode & self::QUERY_MODE_OR) {
+			$where_sql = implode(" OR ",$sql_where);
+		} else {
+			$where_sql = implode(" AND ",$sql_where);
+		}
+		
+		$sql = "
+			SELECT
+				*
+			FROM
+				`".$this->model->getName()."`
+			".((count($args) > 0) ? "WHERE ".$where_sql : "")."
+		";
+
+		return $this->getAdapter()->Execute($sql,$args)->returnArray();
+		
 	}
 
-	public function update() {
-
+	public function update($data) {
+		var_dump(['here'=>__METHOD__,'data'=>$data]);
 	}
 
 	public function delete() {

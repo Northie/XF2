@@ -14,5 +14,9 @@ abstract class data implements iData {
 	public function getName() {
 		return $this->class;
 	}
+	
+	public function setName($name) {
+		$this->class = $name;
+	}
 
 }
