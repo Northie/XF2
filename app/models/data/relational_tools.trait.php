@@ -13,8 +13,15 @@ trait relational_tools {
 		return $this->resources;
 	}
 
-	public function map($data) {
+	public function mapToDb($data) {
 		foreach ($this->fields as $i=> $key) {
+			$this->data[$key] = $data[$key];
+		}
+		return $this;
+	}
+	
+	public function mapFromDb($data) {
+		foreach ($this->_fields as $key=> $val) {
 			$this->data[$key] = $data[$key];
 		}
 		return $this;
@@ -25,12 +32,13 @@ trait relational_tools {
 	}
 
 	public function getById($id) {
-		$this->map($this->db->read(['id'=>$id]));
+		$this->mapFromDb($this->db->read(['id'=>$id])[0]);
 		return $this->get();
 	}
 
 	public function __get($field) {
-		if (isset($this->fields[$field])) {
+		
+		if (isset($this->_fields[$field])) {
 			if (isset($this->data[$field])) {
 				return $this->data[$field];
 			}
@@ -41,7 +49,7 @@ trait relational_tools {
 	}
 
 	public function __set($field, $value) {
-		if (isset($this->fields[$field])) {
+		if (isset($this->_fields[$field])) {
 			$this->data[$field] = $value;
 			return true;
 		}
@@ -63,14 +71,14 @@ trait relational_tools {
 		if ($mode == 'get' && $opperator != 'by') {
 			$field = substr($name, 5);
 			if ($this->fields[$field]) {
-				$this->map($this->db->read([$field=>$args]));
+				$this->mapTo($this->db->read([$field=>$args]));
 			}
 		}
 	}
 
 	private function setGet($mode, $name, $args) {
 		if ($mode == 'get') {
-			if (isset($this->fields[$name])) {
+			if (isset($this->_fields[$name])) {
 				$this->data[$name];
 			}
 
@@ -83,7 +91,7 @@ trait relational_tools {
 		}
 
 		if ($mode == 'set') {
-			if (isset($this->fields[$name])) {
+			if (isset($this->_fields[$name])) {
 				$this->data[$name] = (string) $args;
 				return true;
 			}
@@ -96,7 +104,7 @@ trait relational_tools {
 		if(isset($this->id)) {
 			$this->db->update($this->get());
 		} else {
-			$this->db->create($this->get());
+			$this->id = $this->db->create($this->get());
 		}
 	}
 

@@ -26,7 +26,25 @@ class adapter extends \services\data\adapter {
 	}
 	
 	public function create($data) {
-		var_dump(['here'=>__METHOD__,'data'=>$data]);
+		
+		$this->integrate($data);
+		
+		$pk = $this->model->getPrimaryKey();
+		
+		foreach($this->data as $key => $val) {
+			if($key == $pk) {
+				continue;
+			}
+			$sql_insert_fields[] = $key;
+			$args[$key] = $val;
+		}
+		
+		$sql = "INSERT INTO `".$this->model->getName()."` (`".implode("`, `",$sql_insert_fields)."`) VALUES (:".implode(", :",$sql_insert_fields).")";
+		
+		$this->getAdapter()->Execute($sql,$args);
+		
+		return $this->getAdapter()->returnLastInsertID();
+		
 	}
 
 	public function read($where=false,$mode=adapter::QUERY_MODE_AND) {

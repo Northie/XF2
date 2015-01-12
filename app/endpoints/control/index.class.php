@@ -14,16 +14,21 @@ class index {
 		
 		$user = \models\data\factory::build('user');
 		
-		//$this->data['user'] = $user->getById(1);
 		$this->data['user_meta'] = $user->describe();
+		//*
+		$pw = new \utils\password;
 		
-		$user->map([
+		$user->mapToDb([
 			'name'=>'Chris',
-			'email'=>'a@b.com',
-			'password'=>'password'
+			'email'=>'a+'.uniqid().'@b.com',
+			'password'=> $pw->generatePlain()
 		])->save();
 		
 		$this->data['user'] = $user->get();
+		
+		//*/
+		
+		$this->data['user_r'] = $user->getById($this->data['user']['id']);
 		
 	}
 }
