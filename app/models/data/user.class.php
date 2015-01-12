@@ -10,6 +10,9 @@ class user extends relational {
 	private $data = [];
 	
 	public function __construct($data=false,$label=false) {
+		
+		$this->class = trim(str_replace(__NAMESPACE__, "", __CLASS__),"\\");
+		
 		if($label) {
 			parent::__construct($label);
 		} else {

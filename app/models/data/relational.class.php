@@ -9,6 +9,7 @@ abstract class relational extends data {
 	public function __construct($label) {
 		$this->db = \services\data\relational\factory::Build($label);
 		$this->setProvider($this->db);
+		$this->provider->setModel($this);
 	}
 
 }

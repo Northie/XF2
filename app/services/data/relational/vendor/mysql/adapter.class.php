@@ -8,7 +8,7 @@ class adapter extends \services\data\adapter {
 		$this->db = $db;
 	}
 	
-	public function setModelName($model) {
+	public function setModel($model) {
 		$this->model = $model;
 	}
 
@@ -17,7 +17,7 @@ class adapter extends \services\data\adapter {
 	}
 
 	public function read() {
-
+		var_dump($this->model);
 	}
 
 	public function update() {

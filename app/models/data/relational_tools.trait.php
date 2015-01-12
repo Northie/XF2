@@ -3,8 +3,6 @@
 namespace models\data;
 
 trait relational_tools {
-
-	protected $_class = '';
 	
 	public function describe() {
 		$this->_class = trim(str_replace(__NAMESPACE__,"", __CLASS__),"\\");

@@ -11,5 +11,9 @@ class index {
 
 	public function Execute() {
 		$this->data = ['dummy'=>'data'];
+		
+		$user = \models\data\factory::build('user');
+		
+		$user->getById(1);
 	}
 }
