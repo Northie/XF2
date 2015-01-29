@@ -27,12 +27,12 @@ class XF_DBA {
 	}
 
 	public function getConnection($dsn) {
-
-		$this->settings = \settings\Database::Load()->getSettings($dsn);
-
+		
+		$this->settings = \settings\Database::Load()->get($dsn);
+		
 		if (!isset($this->connections[$dsn])) {
 
-			$c = new \services\data\relational\XF_PDO($this->settings[$dsn]);
+			$c = new \services\data\relational\XF_PDO($this->settings);
 
 			$link = $c->Connect();
 

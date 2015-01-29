@@ -7,13 +7,15 @@ class viewFilter {
 
 	public function in() {
 
+		$endPoint = get_class($this->request->getEndpoint());
+		$viewScript = preg_replace("/^endpoints/", "views", $endPoint);
+		$this->response->setViewScript($viewScript);
+
 		$this->FFW();
 	}
 
 	public function out() {
 		$data = $this->response->getData();
-
-		var_dump($data);
 
 		if (is_null($this->request->ext)) {
 			if ($this->request->isAjax()) {
@@ -25,7 +27,11 @@ class viewFilter {
 			$renderer = strtoupper($this->request->ext);
 		}
 
-		var_dump($renderer);
+		$viewScript = $this->response->getViewScript();
+
+		$viewer = new $viewScript($renderer, $data);
+
+		$viewer->Execute();
 
 		$this->RWD();
 	}

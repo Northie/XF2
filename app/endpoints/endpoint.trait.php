@@ -5,6 +5,13 @@ namespace endpoints;
 trait endpoint {
 
 	protected $data = [];
+	protected $appliedFilters = [];
+	
+	public function Init($request,$response,$filters) {
+		$this->request = $request;
+		$this->response = $response;
+		$this->filters = $filters;
+	}
 
 	public function getNamedFilterList() {
 		return $this->filters;
@@ -34,6 +41,14 @@ trait endpoint {
 
 	public function getData() {
 		return $this->data;
+	}
+	
+	public function filteredBy($filter) {
+		$this->appliedFilters[] = $filter;
+	}
+	
+	public function getAppliedFilters() {
+		return $this->appliedFilters;
 	}
 
 }

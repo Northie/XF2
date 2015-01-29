@@ -1,0 +1,5 @@
+onAfterRestCreate
+onAfterRestDestroy
+onAfterRestRead
+onAfterRestUpdate
+onBeforeResponseSetData

@@ -3,6 +3,7 @@
 namespace flow;
 
 class Request {
+	use \Plugins\helper;
 
 	private $requestKey = '';
 	private $ajax = false;
@@ -11,6 +12,10 @@ class Request {
 	private $endpoint = false;
 
 	public function __construct($server = false) {
+
+		if (!$this->before('RequestConstruct', $this)) {
+			return false;
+		}
 
 		if (!$server) {
 			//if no $_SERVER then throw exception? should come from cli.php?
@@ -57,11 +62,13 @@ class Request {
 		}
 
 		if (!$realmSet) {
+			$this->notify('NoRealm', $this);
 			die('Could not determine a realm');
 		}
 
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 			$this->ajax = true;
+			$this->notify('DetectingAjax', $this);
 		}
 
 		//set requested file extension
@@ -69,6 +76,8 @@ class Request {
 		if (count($ext) > 1) {
 			$this->ext = array_pop($ext);
 		}
+
+		$this->after('RequestConstruct', $this);
 	}
 
 	public function isHTTPS() {
@@ -77,6 +86,7 @@ class Request {
 
 	public function setIsHTTPS($set = true) {
 		$this->https = $set;
+		$this->notify('SetIsHttps', $this);
 	}
 
 	public function isAjax() {
