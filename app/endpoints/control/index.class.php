@@ -4,7 +4,7 @@ namespace endpoints\control;
 
 class index {
 	use \endpoints\endpoint;
-	
+
 	public function __construct($request, $response, $filters) {
 		$this->Init($request, $response, $filters);
 	}
@@ -30,5 +30,16 @@ class index {
 		
 		$this->data['user_r'] = $user->getById($this->data['user']['id']);
 		
+
+		$user = \models\data\factory::Build('user');
+
+		$user->map([
+			'name'=>'Chris',
+			'email'=>'chris@xeneco.co.uk',
+			'password'=>'password',
+		])->save();
+
+		$this->data['user'] = $user->get();
 	}
+
 }

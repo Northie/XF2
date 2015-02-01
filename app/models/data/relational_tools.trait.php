@@ -108,4 +108,8 @@ trait relational_tools {
 		}
 	}
 
+	public function save() {
+		var_dump($this->provider);
+	}
+
 }
