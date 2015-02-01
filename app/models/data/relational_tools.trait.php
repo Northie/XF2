@@ -5,10 +5,10 @@ namespace models\data;
 trait relational_tools {
 
 	protected $_class = '';
-	
+
 	public function describe() {
-		$this->_class = trim(str_replace(__NAMESPACE__,"", __CLASS__),"\\");
-		
+		$this->_class = trim(str_replace(__NAMESPACE__, "", __CLASS__), "\\");
+
 		return [$this->_class=>$this->fields];
 	}
 
@@ -17,9 +17,10 @@ trait relational_tools {
 	}
 
 	public function map($data) {
-		foreach ($this->fields as $key=> $val) {
+		foreach ($this->fields as $i=> $key) {
 			$this->data[$key] = $data[$key];
 		}
+		return $this;
 	}
 
 	public function get() {
@@ -91,6 +92,10 @@ trait relational_tools {
 
 			return false;
 		}
+	}
+
+	public function save() {
+		var_dump($this->provider);
 	}
 
 }
