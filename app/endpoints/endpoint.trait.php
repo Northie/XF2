@@ -6,6 +6,12 @@ trait endpoint {
 
 	protected $data = [];
 	protected $appliedFilters = [];
+	
+	public function Init($request,$response,$filters) {
+		$this->request = $request;
+		$this->response = $response;
+		$this->filters = $filters;
+	}
 
 	public function getNamedFilterList() {
 		return $this->filters;
