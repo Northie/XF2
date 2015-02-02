@@ -3,9 +3,9 @@
 namespace models\data;
 
 trait relational_tools {
-	
+
 	public function describe() {
-		$_class = trim(str_replace(__NAMESPACE__,"", __CLASS__),"\\");
+		$_class = trim(str_replace(__NAMESPACE__, "", __CLASS__), "\\");
 		return [$_class=>$this->fields];
 	}
 
@@ -19,7 +19,7 @@ trait relational_tools {
 		}
 		return $this;
 	}
-	
+
 	public function mapFromDb($data) {
 		foreach ($this->_fields as $key=> $val) {
 			$this->data[$key] = $data[$key];
@@ -37,7 +37,7 @@ trait relational_tools {
 	}
 
 	public function __get($field) {
-		
+
 		if (isset($this->_fields[$field])) {
 			if (isset($this->data[$field])) {
 				return $this->data[$field];
@@ -99,17 +99,13 @@ trait relational_tools {
 			return false;
 		}
 	}
-	
+
 	public function save() {
-		if(isset($this->id)) {
+		if (isset($this->id)) {
 			$this->db->update($this->get());
 		} else {
 			$this->id = $this->db->create($this->get());
 		}
-	}
-
-	public function save() {
-		var_dump($this->provider);
 	}
 
 }
