@@ -7,6 +7,10 @@ class viewFilter {
 
 	public function in() {
 
+		$endPoint = get_class($this->request->getEndpoint());
+		$viewScript = preg_replace("/^endpoints/", "views", $endPoint);
+		$this->response->setViewScript($viewScript);
+
 		$this->FFW();
 	}
 
@@ -23,8 +27,11 @@ class viewFilter {
 			$renderer = strtoupper($this->request->ext);
 		}
 
-		var_dump($renderer);
-		var_dump($data);
+		$viewScript = $this->response->getViewScript();
+
+		$viewer = new $viewScript($renderer, $data);
+
+		$viewer->Execute();
 
 		$this->RWD();
 	}

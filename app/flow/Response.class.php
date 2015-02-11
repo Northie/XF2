@@ -5,11 +5,14 @@ namespace flow;
 class Response {
 	use \Plugins\helper;
 
+	private $viewScript = false;
+
 	public function __construct() {
 
 		if (!$this->before('ResponseConstruct', $this)) {
 			return false;
 		}
+
 		$this->after('ResponseConstruct', $this);
 	}
 
@@ -43,6 +46,28 @@ class Response {
 		$this->format = $format;
 
 		$this->after('ResponseSetResponseFormat', $this);
+	}
+
+	public function setViewScript($view) {
+
+		if (!$this->before('ResponseSetViewScript', $this)) {
+			return false;
+		}
+
+		$this->viewScript = $view;
+
+		$this->after('ResponseSetViewScript', $this);
+	}
+
+	public function getViewScript() {
+
+		if (!$this->before('ResponseGetViewScript', $this)) {
+			return false;
+		}
+
+		return $this->viewScript;
+
+		$this->after('ResponseSetViewScript', $this);
 	}
 
 }

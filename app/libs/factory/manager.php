@@ -75,5 +75,9 @@ trait flow {
 	public function setOptions($options) {
 		$this->options = $options;
 	}
+	
+	public function getParent() {
+		return $this->parent;
+	}
 
 }
