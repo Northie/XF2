@@ -46,6 +46,7 @@ trait _general {
 		//}
 
 		$this->settings = $settings;
+
 	}
 
 }
