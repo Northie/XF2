@@ -3,15 +3,16 @@
 namespace utils\autoload;
 
 class fileFinder {
+
 	public static function CompileFiles() {
 
-		$path = \XENECO_PATH;
+		$path = defined('\\SCAN_PATH') ? \SCAN_PATH : \XENECO_PATH;
 
 		$ignore = array('.htaccess', 'error_log', 'cgi-bin', 'php.ini', '.ftpquota', '.svn', 'swiftmailer');
 
 		$dirTree = self::getDirectory($path, $ignore);
 
-		foreach ($dirTree as $dir => $files) {
+		foreach ($dirTree as $dir=> $files) {
 			foreach ($files as $file) {
 				$a = $dir . DIRECTORY_SEPARATOR . $file;
 				$a = str_replace('/', DIRECTORY_SEPARATOR, $a);
@@ -25,9 +26,9 @@ class fileFinder {
 
 		$hooks = array();
 
-        $error_level = ini_get('error_reporting');
-        ini_set('error_reporting',(E_ALL ^ E_NOTICE));  //ignore notices;
-        
+		$error_level = ini_get('error_reporting');
+		ini_set('error_reporting', (E_ALL ^ E_NOTICE));  //ignore notices;
+
 		foreach ($all as $file) {
 
 			set_time_limit(30);
@@ -60,8 +61,8 @@ class fileFinder {
 			}
 		}
 
-        ini_set('error_reporting',$error_level);  //restore error_level
-        
+		ini_set('error_reporting', $error_level);  //restore error_level
+
 		$h = array_keys($hooks);
 		sort($h);
 
@@ -105,9 +106,9 @@ class fileFinder {
 		$a = token_get_all($c);
 
 		for ($i = 0; $i < count($a); $i++) {
-            
-            //echo "==<pre>\n".$a[$i][0]."\n".$a[$i][1]."\n</pre>==<br />\n";
-           
+
+			//echo "==<pre>\n".$a[$i][0]."\n".$a[$i][1]."\n</pre>==<br />\n";
+
 
 			if (strtolower($a[$i][1]) == 'namespace') {
 				$j = 1;
@@ -124,7 +125,7 @@ class fileFinder {
 				}
 				$namespaces[] = trim($namespace);
 				$i+=$j;
-				echo "Logging Nmaespace ".$namespace.".....\n";
+				echo "Logging Nmaespace " . $namespace . ".....\n";
 			}
 
 			if (strtolower($a[$i][1]) == 'class') {
@@ -143,7 +144,7 @@ class fileFinder {
 
 				$classes[] = trim($class);
 				$i+=$j;
-				echo "Logging Class ".$class.".....\n";
+				echo "Logging Class " . $class . ".....\n";
 			}
 
 			if (strtolower($a[$i][1]) == 'interface') {
@@ -162,7 +163,7 @@ class fileFinder {
 
 				$interfaces[] = trim($interface);
 				$i+=$j;
-				echo "Logging Interface ".$interface.".....\n";
+				echo "Logging Interface " . $interface . ".....\n";
 			}
 
 			if (strtolower($a[$i][1]) == 'trait') {
@@ -181,7 +182,7 @@ class fileFinder {
 
 				$traits[] = trim($trait);
 				$i+=$j;
-				echo "Logging Trait ".$trait.".....\n";
+				echo "Logging Trait " . $trait . ".....\n";
 			}
 		}
 
@@ -198,6 +199,7 @@ class fileFinder {
 			}
 		}
 
-		return array('namespaces' => $namespaces, 'classes' => $classes, 'interfaces' => $interfaces, "traits" => $traits, "plugins" => $plugins);
+		return array('namespaces'=>$namespaces, 'classes'=>$classes, 'interfaces'=>$interfaces, "traits"=>$traits, "plugins"=>$plugins);
 	}
+
 }
