@@ -42,21 +42,21 @@ class fileFinder {
 				$class = $d['classes'][$i];
 				$fq = trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $class, '\\');
 
-				$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $class, '\\') . '\'] = \'' . $file . '\';' . "\n";
+				//$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $class, '\\') . '\'] = \'' . $file . '\';' . "\n";
 			}
 
 			for ($i = 0; $i < count($d['interfaces']); $i++) {
 				$interface = $d['interfaces'][$i];
 				$fq = trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $interface, '\\');
 
-				$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $interface, '\\') . '\'] = \'' . $file . '\';' . "\n";
+				//$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $interface, '\\') . '\'] = \'' . $file . '\';' . "\n";
 			}
 
 			for ($i = 0; $i < count($d['traits']); $i++) {
 				$trait = $d['traits'][$i];
 				$fq = trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $trait, '\\');
 
-				$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $trait, '\\') . '\'] = \'' . $file . '\';' . "\n";
+				//$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $trait, '\\') . '\'] = \'' . $file . '\';' . "\n";
 			}
 
 			for ($i = 0; $i < count($d['plugins']); $i++) {
@@ -71,12 +71,13 @@ class fileFinder {
 		$h = array_keys($hooks);
 		sort($h);
 
-		file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', "<?php\n\n" . $lines);
+		//file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', "<?php\n\n" . $lines);
 		file_put_contents(\XENECO_PATH . 'hook-list.txt', implode("\n", $h));
 
 		$exportList = [];
 
 		foreach ($classList as $cls=> $files) {
+			$exportList[$cls] = $files[0];
 			if ($files[1]) {
 				foreach ($files as $file) {
 					if (strpos($file, PROJECT_PATH) !== false) {
@@ -87,7 +88,7 @@ class fileFinder {
 			}
 		}
 		$exportStr = "<?php\n\n" . '$classList = ' . var_export($exportList);
-		file_put_contents(\XENECO_PATH . '/settings/class-list2.static.php', "<?php\n\n" . $lines);
+		file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', "<?php\n\n" . $lines);
 		//echo "class list written";
 	}
 
