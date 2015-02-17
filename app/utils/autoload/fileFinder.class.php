@@ -41,29 +41,24 @@ class fileFinder {
 
 				$class = $d['classes'][$i];
 				$fq = trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $class, '\\');
-
-				//$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $class, '\\') . '\'] = \'' . $file . '\';' . "\n";
+				$classList[$fq][] = $file;
 			}
 
 			for ($i = 0; $i < count($d['interfaces']); $i++) {
 				$interface = $d['interfaces'][$i];
 				$fq = trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $interface, '\\');
-
-				//$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $interface, '\\') . '\'] = \'' . $file . '\';' . "\n";
+				$classList[$fq][] = $file;
 			}
 
 			for ($i = 0; $i < count($d['traits']); $i++) {
 				$trait = $d['traits'][$i];
 				$fq = trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $trait, '\\');
-
-				//$lines.='$classlist[\'' . trim($prefix . $d['namespaces'][0] . ($d['namespaces'][0] == '' ? '' : '\\') . $trait, '\\') . '\'] = \'' . $file . '\';' . "\n";
+				$classList[$fq][] = $file;
 			}
 
 			for ($i = 0; $i < count($d['plugins']); $i++) {
 				$hooks[$d['plugins'][$i]] ++;
 			}
-
-			$classList[$fq][] = $file;
 		}
 
 		ini_set('error_reporting', $error_level);  //restore error_level
@@ -71,7 +66,6 @@ class fileFinder {
 		$h = array_keys($hooks);
 		sort($h);
 
-		//file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', "<?php\n\n" . $lines);
 		file_put_contents(\XENECO_PATH . 'hook-list.txt', implode("\n", $h));
 
 		$exportList = [];
@@ -87,9 +81,8 @@ class fileFinder {
 				}
 			}
 		}
-		$exportStr = "<?php\n\n" . '$classList = ' . var_export($exportList);
-		file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', "<?php\n\n" . $lines);
-		//echo "class list written";
+		$exportStr = "<?php\n\n" . '$classlist = ' . var_export($exportList, 1) . ';';
+		file_put_contents(\XENECO_PATH . '/settings/class-list.static.php', $exportStr);
 	}
 
 	public static function getDirectory($path = '.', $ignore = '') {
