@@ -7,18 +7,28 @@ class FrontController extends \flow\controller {
 	public function __construct() {
 
 		parent::__construct();
+		//untested
 
-		$endpointStr = trim($this->request->ENDPOINT, "/") == "" ? '\\endpoints\\web\\index' : '\\endpoints\\web' . str_replace("/", "\\", $this->request->ENDPOINT);
+		$req = explode("/", trim($this->request->ENDPOINT, "/"));
+		$params = [];
 
-		//web endpoint defaults to web index?
-
-		if (is_null(\settings\fileList::Load()->getFileForClass(trim($endpointStr, "/\\")))) {
-			$endpointStr = '\\endpoints\\web\\index';
+		while (true) {
+			$endpointStr = '\\endpoints\\web\\' . implode("\\", $req);
+			if (is_null(\settings\fileList::Load()->getFileForClass($endpointStr))) {
+				array_unshift($params, array_pop($req));
+			} else {
+				break;
+			}
+			if (count($req) == 0) {
+				$endpointStr = '\\endpoints\\web\\index';
+				break;
+			}
 		}
 
 		$endpoint = new $endpointStr($this->request, $this->response, $this->filters);
 
 		$this->request->setEndpoint($endpoint);
+
 	}
 
 }
