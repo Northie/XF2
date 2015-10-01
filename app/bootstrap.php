@@ -9,3 +9,7 @@ include 'settings/general.trait.php';
 include 'settings/general.settings.php';
 include 'utils/autoload/fileFinder.class.php';
 include 'utils/autoload/autoload.function.php';
+
+ \settings\general::Load()->set(['XENECO','CONTEXT'], 'DEV');
+
+\Plugins\Plugins::Load()->registerPlugins();

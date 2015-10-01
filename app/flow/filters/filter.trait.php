@@ -3,6 +3,8 @@
 namespace flow\filters;
 
 trait filter {
+	
+	use \Plugins\helper;
 
 	private $currentNode;
 	private $list;

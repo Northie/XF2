@@ -25,6 +25,8 @@ class Request {
 		foreach ($server as $key=> $val) {
 			$this->__set($key, $val);
 		}
+		
+		$this->__set('server',$server);
 
 		$this->requestKey = uniqid();
 
@@ -39,6 +41,9 @@ class Request {
 
 
 		$url = $this->HTTP_SCHEME . $this->HTTP_HOST . $this->REQUEST_URI;
+		
+		$this->__set('URI',$url);
+
 
 		$request = parse_url($url);
 
@@ -63,7 +68,6 @@ class Request {
 
 		if (!$realmSet) {
 			$this->notify('NoRealm', $this);
-			die('Could not determine a realm');
 		}
 
 		if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
@@ -111,6 +115,14 @@ class Request {
 
 	public function getEndpoint() {
 		return $this->endpoint;
+	}
+	
+	public function getRequestType() {
+		return $this->requestType;
+	}
+	
+	private function setRequestType($verb) {
+		$this->requestType = strtoupper($verb);
 	}
 
 }
