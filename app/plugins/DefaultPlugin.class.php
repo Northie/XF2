@@ -2,8 +2,6 @@
 
 namespace Plugins;
 
-
-
 abstract class DefaultPlugin implements iDefaultPlugin {
 
 	private $admin = false;

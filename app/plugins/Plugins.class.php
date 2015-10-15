@@ -20,7 +20,7 @@ class Plugins {
 
 		for ($i = 0; $i < count($files); $i++) {
 			if (strpos($files[$i], ".plugin.class.php") > -1) {
-				require_once($plugin_path . $files[$i]);
+				//require_once($plugin_path .'/'. $files[$i]);
 				$plugins[] = str_replace(".plugin.class.php", "", $files[$i]);
 			}
 		}
@@ -44,11 +44,11 @@ class Plugins {
 
 	public function Register($cls_name, $when) {
 
-		$this->plugins[$when][] = $cls_name;
+		$this->plugins[$when][] = "\\".$cls_name;
 	}
 
 	public function DoPlugins($when, $obj, $options = false) {
-
+		
 		if (!self::$use_plugins) {
 			return true;
 		}

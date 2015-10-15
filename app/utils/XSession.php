@@ -45,5 +45,9 @@ class XSession {
 	public function get($key) {
 		return $_SESSION[$this->namespace][$key];
 	}
+	
+	public function getSessionId() {
+		return session_id();
+	}
 
 }
