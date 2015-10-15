@@ -1,12 +1,11 @@
 <?php
 
-namespace models\data;
+namespace models\data\accessor;
 
-class user extends relational {
+class user extends \models\data\relational {
 	use relational_tools;
 
 	private $fields = ['id', 'name','email', 'password'];
-	private $resources = ['invoices'=>['class'=>'invoice']];
 	private $data = [];
 	
 	public function __construct($data=false,$label=false) {
