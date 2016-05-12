@@ -137,4 +137,12 @@ class adapter extends \services\data\adapter {
 		curl_close($this->client);
 	}
 
+	/**
+	 * drop in replacement for file_get_contents
+	 */
+
+	public static function fileGetContents($url) {
+		return factory::Build()->get($url);
+	}
+
 }
